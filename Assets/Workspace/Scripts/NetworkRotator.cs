@@ -10,6 +10,9 @@ public class NetworkRotator : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (!Object.HasStateAuthority)
+            return;
+
         if (IsRotating)
         {
             transform.Rotate(Vector3.up, rotateSpeed * Runner.DeltaTime);
