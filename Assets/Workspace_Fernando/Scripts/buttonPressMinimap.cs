@@ -1,86 +1,68 @@
-using Unity.Netcode;
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
-public class buttonPressMinimap : NetworkBehaviour
+public class buttonPressMinimap : MonoBehaviour
 {
-    [Header("Visual")]
-    public Transform buttonVisual;
-    public Vector3 pressedOffset = new Vector3(0, -0.05f, 0);
-    public float speed = 6f;
+    public float pressDistance = 0.02f;
+    public float recoilDuration = 0.2f;
 
-    [Header("Debug")]
     public TextMeshProUGUI debugText;
 
-    private Vector3 startPos;
-    private Vector3 targetPos;
+    private Vector3 startLocalPos;
     private bool isPressed = false;
 
     void Start()
     {
-        if (buttonVisual == null)
-        {
-            Debug.LogError("ButtonVisual not assigned!");
-            return;
-        }
-
-        startPos = buttonVisual.localPosition;
-        targetPos = startPos + pressedOffset;
+        // Store the ORIGINAL LOCAL position of the parent
+        startLocalPos = transform.localPosition;
     }
-
-    // 🔥 Called by Poke Interactable event
+    
     public void OnButtonPressed()
-    {
-        if (isPressed) return;
-
-        if (debugText != null)
-            debugText.text = "Button Poked";
-
-        PressClientRpc();
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    void PressServerRpc()
-    {
-        PressClientRpc();
-    }
-
-    [ClientRpc]
-    void PressClientRpc()
     {
         if (isPressed) return;
 
         isPressed = true;
 
         if (debugText != null)
-            debugText.text = "RPC → moving button";
+            debugText.text = "Pressed: " + pressDistance;
 
-        StopAllCoroutines();
-        StartCoroutine(MoveDown());
+        // Move the parent along LOCAL Z (your button press direction)
+        transform.localPosition = startLocalPos + new Vector3(0, -pressDistance, 0);
     }
 
-    System.Collections.IEnumerator MoveDown()
+    public void OnButtonReleased()
+    {
+        if (!isPressed) return;
+
+        isPressed = false;
+
+        if (debugText != null)
+            debugText.text = "Released";
+
+        StopAllCoroutines();
+        StartCoroutine(Recoil());
+    }
+
+    IEnumerator Recoil()
     {
         float t = 0f;
+        Vector3 from = transform.localPosition;
 
-        while (t < 1f)
+        while (t < recoilDuration)
         {
-            t += Time.deltaTime * speed;
-            buttonVisual.localPosition = Vector3.Lerp(startPos, targetPos, t);
+            t += Time.deltaTime;
+
+            float normalized = t / recoilDuration;
+
+            // Smooth ease-out
+            float eased = 1f - Mathf.Pow(1f - normalized, 3f);
+
+            transform.localPosition = Vector3.Lerp(from, startLocalPos, eased);
+
             yield return null;
         }
 
-        buttonVisual.localPosition = targetPos;
-    }
-
-    // Optional: reset (useful later)
-    public void ResetButton()
-    {
-        isPressed = false;
-        StopAllCoroutines();
-        buttonVisual.localPosition = startPos;
-
-        if (debugText != null)
-            debugText.text = "Button Reset";
+        transform.localPosition = startLocalPos;
     }
 }
