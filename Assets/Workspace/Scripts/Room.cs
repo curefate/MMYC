@@ -1,25 +1,14 @@
+using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Room : MonoBehaviour
 {
     public string RoomID;
-    public bool TestMode = false;
+    public GameObject RoomObj;
+    public List<Room> NeighborRooms;
 
-    public void Start()
-    {
-        if (TestMode)
-        {
-            OnEnterRoom();
-        }
-    }
-
-    public virtual void OnEnterRoom()
-    {
-        
-    }
-
-    public virtual void OnExitRoom()
-    {
-        
-    }
+    public UnityEvent OnEnterRoom;
+    public UnityEvent OnExitRoom;
 }
