@@ -10,11 +10,16 @@ public class Room : NetworkBehaviour
     public string RoomID { get; set; } = string.Empty;
     [Networked]
     public bool IsAccessible { get; set; } = false;
+    [Networked]
+    public bool IsFinished { get; set; } = false;
 
     public List<Room> NeighborRooms;
 
     public GameObject Visual;
+    [HideInInspector]
     public InteractableUnityEventWrapper Wrapper;
+    [HideInInspector]
+    public LidDisappear lidDisappear;
 
     public UnityEvent OnFinishRoom;
     public UnityEvent OnEnterRoom;
@@ -26,21 +31,25 @@ public class Room : NetworkBehaviour
     {
         if (NeighborRooms == null || NeighborRooms.Count == 0) Debug.LogWarning($"Room {RoomID} has no neighboring rooms assigned.");
 
-        Minimap minimap = FindFirstObjectByType<Minimap>();
-        if (minimap != null)
+        originalVisualPos = Visual.transform.localPosition;
+
+        Wrapper = GetComponentInChildren<InteractableUnityEventWrapper>();
+        if (Wrapper == null)
         {
-            minimap.RegisterRoom(this);
-        }
-        else
-        {
-            Debug.LogWarning($"No Minimap found for Room {RoomID}.");
+            Debug.LogWarning($"Room {RoomID} has no InteractableUnityEventWrapper assigned.");
         }
 
-        originalVisualPos = Visual.transform.localPosition;
+        lidDisappear = GetComponentInChildren<LidDisappear>();
+        if (lidDisappear == null)
+        {
+            Debug.LogWarning($"Room {RoomID} has no LidDisappear assigned.");
+        }
     }
 
     public override void FixedUpdateNetwork()
     {
+        if (!Object.HasStateAuthority) return;
+
         if (IsAccessible)
         {
             Visual.transform.localPosition = originalVisualPos;
@@ -51,5 +60,13 @@ public class Room : NetworkBehaviour
             Visual.transform.localPosition = Vector3.zero;
             Wrapper.enabled = false;
         }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void Rpc_LockRoom(bool lockRoom)
+    {
+        if (!Object.HasStateAuthority) return;
+
+        IsAccessible = !lockRoom;
     }
 }

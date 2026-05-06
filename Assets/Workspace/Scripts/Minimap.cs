@@ -8,7 +8,7 @@ public class Minimap : NetworkBehaviour
     public string CurrentRoomID { get; set; } = string.Empty;
 
     private Dictionary<string, Room> roomDict;
-    private Room currentRoom = null;
+    private Room currentRoom => roomDict.TryGetValue(CurrentRoomID, out var room) ? room : null;
 
     public void RegisterRoom(Room room)
     {
@@ -28,27 +28,23 @@ public class Minimap : NetworkBehaviour
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void Rpc_SwitchToRoom(string roomID)
+    public void Rpc_EnterCurrentRoom()
     {
         if (!Object.HasStateAuthority)
             return;
 
-        if (roomID == CurrentRoomID) return;
-
-        if (roomDict.TryGetValue(roomID, out Room newRoom))
+        if (!currentRoom.IsFinished)
         {
-            if (newRoom == currentRoom) return;
-
-            if (currentRoom != null)
-            {
-                currentRoom.OnExitRoom.Invoke();
-            }
-            currentRoom = newRoom;
-            currentRoom.OnEnterRoom.Invoke();
+            // If first time entering current room, lock all rooms
+            Rpc_LockAllRooms();
         }
         else
         {
-            Debug.LogError($"Room with ID {roomID} not found in Minimap.");
+            // Or unlock neighbours
+            foreach (var neighbor in currentRoom.NeighborRooms)
+            {
+                neighbor.Rpc_LockRoom(false);
+            }
         }
     }
 
@@ -60,8 +56,34 @@ public class Minimap : NetworkBehaviour
 
         foreach (var room in roomDict.Values)
         {
-            if (room.RoomID == currentRoom.RoomID) return;
             room.IsAccessible = false;
+        }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void Rpc_FinishCurrentRoom()
+    {
+        if (!Object.HasStateAuthority)
+            return;
+
+        if (currentRoom != null)
+        {
+            currentRoom.IsFinished = true;
+            currentRoom.OnFinishRoom.Invoke();
+        }
+    }
+
+    public override void Spawned()
+    {
+        foreach (var room in FindObjectsByType<Room>(FindObjectsSortMode.None))
+        {
+            RegisterRoom(room);
+            room.OnEnterRoom.AddListener(() => Rpc_EnterCurrentRoom());
+            foreach (var neighbor in room.NeighborRooms)
+            {
+                room.OnFinishRoom.AddListener(() => neighbor.Rpc_LockRoom(false));
+                room.OnFinishRoom.AddListener(() => neighbor.lidDisappear.Rpc_OpenCover());
+            }
         }
     }
 }
