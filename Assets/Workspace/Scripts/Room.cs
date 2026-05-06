@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Room : NetworkBehaviour
 {
     [Networked]
-    public string RoomID { get; set; } = string.Empty;
+    public string RoomID { get; private set; } = string.Empty;
     [Networked]
     public bool IsAccessible { get; set; } = false;
     [Networked]
@@ -17,7 +17,7 @@ public class Room : NetworkBehaviour
 
     public GameObject Visual;
     [HideInInspector]
-    public InteractableUnityEventWrapper Wrapper;
+    public PokeInteractable interactable;
     [HideInInspector]
     public LidDisappear lidDisappear;
 
@@ -25,18 +25,16 @@ public class Room : NetworkBehaviour
     public UnityEvent OnEnterRoom;
     public UnityEvent OnExitRoom;
 
-    private Vector3 originalVisualPos;
+    private readonly Vector3 originalVisualPos = new Vector3(0, 0, -0.3f);
 
     void Awake()
     {
         if (NeighborRooms == null || NeighborRooms.Count == 0) Debug.LogWarning($"Room {RoomID} has no neighboring rooms assigned.");
 
-        originalVisualPos = Visual.transform.localPosition;
-
-        Wrapper = GetComponentInChildren<InteractableUnityEventWrapper>();
-        if (Wrapper == null)
+        interactable = GetComponentInChildren<PokeInteractable>();
+        if (interactable == null)
         {
-            Debug.LogWarning($"Room {RoomID} has no InteractableUnityEventWrapper assigned.");
+            Debug.LogWarning($"Room {RoomID} has no PokeInteractable assigned.");
         }
 
         lidDisappear = GetComponentInChildren<LidDisappear>();
@@ -53,12 +51,12 @@ public class Room : NetworkBehaviour
         if (IsAccessible)
         {
             Visual.transform.localPosition = originalVisualPos;
-            Wrapper.enabled = true;
+            interactable.enabled = true;
         }
         else
         {
             Visual.transform.localPosition = Vector3.zero;
-            Wrapper.enabled = false;
+            interactable.enabled = false;
         }
     }
 

@@ -17,4 +17,14 @@ public class pinMapFloatAnim : MonoBehaviour
         float yOffset = (Mathf.Sin(Time.time * speed) + 1f) / 2f * amplitude;
         transform.position = startPos + new Vector3(0, yOffset, 0);
     }
+
+    public void RecalibratePosition(Vector3 pos)
+    {
+        var renderer = GetComponent<MeshRenderer>();
+        if (renderer.enabled == false)
+        {
+            renderer.enabled = true;
+        }
+        startPos = pos;
+    }
 }

@@ -15,6 +15,11 @@ public class LidDisappear : NetworkBehaviour
         /* if (!Object.HasStateAuthority)
             return; */
 
+        if (gameObject.activeSelf == false)
+        {
+            return;
+        }
+
         if (openCoverCoroutine != null)
         {
             StopCoroutine(openCoverCoroutine);

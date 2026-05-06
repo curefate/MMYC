@@ -295,16 +295,16 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NetworkRotator, Assembly-CSharp
-        m_MethodName: RPC_ToggleRotation
-        m_Mode: 1
+      - m_Target: {fileID: 5680541800611260801}
+        m_TargetAssemblyTypeName: Minimap, Assembly-CSharp
+        m_MethodName: Rpc_SwitchRoom
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 02
           m_BoolArgument: 0
         m_CallState: 2
   _whenUnselect:
@@ -478,7 +478,7 @@ MonoBehaviour:
   NeighborRooms:
   - {fileID: 6257120640759312800}
   Visual: {fileID: 8712355819151496121}
-  Wrapper: {fileID: 0}
+  interactable: {fileID: 0}
   lidDisappear: {fileID: 0}
   OnFinishRoom:
     m_PersistentCalls:
@@ -878,16 +878,16 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NetworkRotator, Assembly-CSharp
-        m_MethodName: RPC_ToggleRotation
-        m_Mode: 1
+      - m_Target: {fileID: 5680541800611260801}
+        m_TargetAssemblyTypeName: Minimap, Assembly-CSharp
+        m_MethodName: Rpc_SwitchRoom
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 04
           m_BoolArgument: 0
         m_CallState: 2
   _whenUnselect:
@@ -1383,16 +1383,16 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NetworkRotator, Assembly-CSharp
-        m_MethodName: RPC_ToggleRotation
-        m_Mode: 1
+      - m_Target: {fileID: 5680541800611260801}
+        m_TargetAssemblyTypeName: Minimap, Assembly-CSharp
+        m_MethodName: Rpc_SwitchRoom
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 03
           m_BoolArgument: 0
         m_CallState: 2
   _whenUnselect:
@@ -1538,7 +1538,7 @@ MonoBehaviour:
   NeighborRooms:
   - {fileID: 111637524802933824}
   Visual: {fileID: 3498037385399229797}
-  Wrapper: {fileID: 0}
+  interactable: {fileID: 0}
   lidDisappear: {fileID: 0}
   OnFinishRoom:
     m_PersistentCalls:
@@ -1601,7 +1601,7 @@ MonoBehaviour:
   - {fileID: 111637524802933824}
   - {fileID: 6257120640759312800}
   Visual: {fileID: 7926917797403603083}
-  Wrapper: {fileID: 0}
+  interactable: {fileID: 0}
   lidDisappear: {fileID: 0}
   OnFinishRoom:
     m_PersistentCalls:
@@ -1919,16 +1919,16 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NetworkRotator, Assembly-CSharp
-        m_MethodName: RPC_ToggleRotation
-        m_Mode: 1
+      - m_Target: {fileID: 5680541800611260801}
+        m_TargetAssemblyTypeName: Minimap, Assembly-CSharp
+        m_MethodName: Rpc_SwitchRoom
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 01
           m_BoolArgument: 0
         m_CallState: 2
   _whenUnselect:
@@ -2457,6 +2457,7 @@ Transform:
   - {fileID: 1761484559627513552}
   - {fileID: 1003000607709519575}
   - {fileID: 5549799285860215657}
+  - {fileID: 4659596336961136263}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &813237867840810865
@@ -2474,7 +2475,8 @@ MonoBehaviour:
   SortKey: 2392433111
   ObjectInterest: 1
   Flags: 786433
-  NestedObjects: []
+  NestedObjects:
+  - {fileID: 8859958275310569497}
   NetworkedBehaviours:
   - {fileID: 5680541800611260801}
   - {fileID: 5549529824476237904}
@@ -2509,6 +2511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Minimap
   _CurrentRoomID: 
+  MapPin: {fileID: 9173305806262391652}
 --- !u!1 &4277796459811070772
 GameObject:
   m_ObjectHideFlags: 0
@@ -3224,16 +3227,16 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NetworkRotator, Assembly-CSharp
-        m_MethodName: RPC_ToggleRotation
-        m_Mode: 1
+      - m_Target: {fileID: 5680541800611260801}
+        m_TargetAssemblyTypeName: Minimap, Assembly-CSharp
+        m_MethodName: Rpc_SwitchRoom
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 05
           m_BoolArgument: 0
         m_CallState: 2
   _whenUnselect:
@@ -3304,7 +3307,7 @@ MonoBehaviour:
   - {fileID: 2233635978860008273}
   - {fileID: 4392729338542536934}
   Visual: {fileID: 6222777095622400631}
-  Wrapper: {fileID: 0}
+  interactable: {fileID: 0}
   lidDisappear: {fileID: 0}
   OnFinishRoom:
     m_PersistentCalls:
@@ -3458,7 +3461,7 @@ MonoBehaviour:
   NeighborRooms:
   - {fileID: 111637524802933824}
   Visual: {fileID: 9079637140648856720}
-  Wrapper: {fileID: 0}
+  interactable: {fileID: 0}
   lidDisappear: {fileID: 0}
   OnFinishRoom:
     m_PersistentCalls:
@@ -4041,16 +4044,16 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NetworkRotator, Assembly-CSharp
-        m_MethodName: RPC_ToggleRotation
-        m_Mode: 1
+      - m_Target: {fileID: 5680541800611260801}
+        m_TargetAssemblyTypeName: Minimap, Assembly-CSharp
+        m_MethodName: Rpc_SwitchRoom
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 06
           m_BoolArgument: 0
         m_CallState: 2
   _whenUnselect:
@@ -4743,14 +4746,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7706df83804ca0448b0b7033a30a376d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Room
-  _RoomID: 05
+  _RoomID: 06
   _IsAccessible: 0
   _IsFinished: 0
   NeighborRooms:
   - {fileID: 2310900265347734411}
   - {fileID: 4392729338542536934}
   Visual: {fileID: 4712940921846680602}
-  Wrapper: {fileID: 0}
+  interactable: {fileID: 0}
   lidDisappear: {fileID: 0}
   OnFinishRoom:
     m_PersistentCalls:
@@ -5837,3 +5840,99 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 1
+--- !u!1001 &4699602754314050217
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3604420100526610629}
+    m_Modifications:
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892092526344469854, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_Name
+      value: pin_map
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892092526344469854, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309015574756545200, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: SortKey
+      value: 2574300988
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074807489358636326, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+--- !u!4 &4659596336961136263 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 113260557369457710, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+  m_PrefabInstance: {fileID: 4699602754314050217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8859958275310569497 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4309015574756545200, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+  m_PrefabInstance: {fileID: 4699602754314050217}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+--- !u!114 &9173305806262391652 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4500915485312436685, guid: 2cdd05f463734d34793e021ce84d395f, type: 3}
+  m_PrefabInstance: {fileID: 4699602754314050217}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c6c5e41f8902c46ac57087dc6d99ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::pinMapFloatAnim
