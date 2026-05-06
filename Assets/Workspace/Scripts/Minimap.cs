@@ -76,7 +76,7 @@ public class Minimap : NetworkBehaviour
         foreach (var room in FindObjectsByType<Room>(FindObjectsSortMode.None))
         {
             RegisterRoom(room);
-            room.OnEnterRoom.AddListener(() => { MapPin.RecalibratePosition(room.Visual.transform.position); });
+            room.OnEnterRoom.AddListener(() => { MapPin.Rpc_RecalibratePosition(room.Visual.transform.position); });
             foreach (var neighbor in room.NeighborRooms)
             {
                 room.OnEnterRoom.AddListener(() => { if (room.IsFinished) neighbor.Rpc_LockRoom(false); });

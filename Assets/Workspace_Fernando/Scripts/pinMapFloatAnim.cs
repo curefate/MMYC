@@ -1,6 +1,7 @@
+using Fusion;
 using UnityEngine;
 
-public class pinMapFloatAnim : MonoBehaviour
+public class pinMapFloatAnim : NetworkBehaviour
 {
     public float amplitude = 0.005f; // smaller movement
     public float speed = 2f;
@@ -18,7 +19,8 @@ public class pinMapFloatAnim : MonoBehaviour
         transform.position = startPos + new Vector3(0, yOffset, 0);
     }
 
-    public void RecalibratePosition(Vector3 pos)
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void Rpc_RecalibratePosition(Vector3 pos)
     {
         var renderer = GetComponent<MeshRenderer>();
         if (renderer.enabled == false)
