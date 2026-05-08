@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Workspace/Scenes/Test.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Workspace_Fernando/Scenes/minimap_v1.unity
     guid: d8570ebc82fff464fa6a0b7b3d3ced9e
+  - enabled: 1
+    path: Assets/Workspace_Fernando/Scenes/redesign_room.unity
+    guid: 648e9fafdefb2344f843aa1f91402d31
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d58c00329e26d62479edf31cef69c53c, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
