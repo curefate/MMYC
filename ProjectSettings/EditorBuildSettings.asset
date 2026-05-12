@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Workspace/Scenes/Test/Test.unity
+    path: Assets/Old/Workspace/Scenes/Test/Test.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
-    path: Assets/Workspace/Scenes/Test/BtnTest.unity
+    path: Assets/Old/Workspace/Scenes/Test/BtnTest.unity
     guid: a4bcfb18177d614438a4779383f98cfd
   - enabled: 1
-    path: Assets/Workspace/Scenes/Test/Switch_Room_Test.unity
+    path: Assets/Old/Workspace/Scenes/Test/Switch_Room_Test.unity
     guid: ceea54b701fba02488ec1b6c114d0718
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d58c00329e26d62479edf31cef69c53c, type: 2}
