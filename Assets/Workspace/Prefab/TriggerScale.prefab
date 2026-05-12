@@ -255,7 +255,8 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 8184066053279894459}
   ForceRemoteRenderTimeframe: 0
 --- !u!1 &3846791104703049827
 GameObject:
@@ -954,6 +955,7 @@ GameObject:
   - component: {fileID: 2993079519991250007}
   - component: {fileID: 3204302284065998760}
   - component: {fileID: 2826532398319283465}
+  - component: {fileID: 8184066053279894459}
   m_Layer: 2
   m_Name: Beam
   m_TagString: Untagged
@@ -1035,6 +1037,22 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8184066053279894459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925352607686020739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 743d6cd65d1e9b64a9ea83e95e101320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BeamRotator
+  Speed: 10
+  MaxAngle: 25
+  MaxWeightDifference: 7
+  _Angle: 0
 --- !u!1 &8044701801571384775
 GameObject:
   m_ObjectHideFlags: 0
