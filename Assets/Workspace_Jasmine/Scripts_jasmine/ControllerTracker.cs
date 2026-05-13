@@ -16,11 +16,14 @@ public class ControllerTracker : MonoBehaviour
             OVRInput.GetLocalControllerRotation(
                 OVRInput.Controller.RTouch);
 
-        // Get tracking space
-        Transform trackingSpace =
-            FindObjectOfType<OVRCameraRig>().trackingSpace;
+        // Find camera rig
+        OVRCameraRig rig =
+            FindFirstObjectByType<OVRCameraRig>();
 
-        // Convert local position to world position
+        // Get tracking space
+        Transform trackingSpace = rig.trackingSpace;
+
+        // Convert local controller position to world position
         Vector3 worldPos =
             trackingSpace.TransformPoint(localPos);
 
@@ -28,8 +31,11 @@ public class ControllerTracker : MonoBehaviour
         Quaternion worldRot =
             trackingSpace.rotation * localRot;
 
-        // Move cube
+        // Move table
         cube.position = worldPos;
         cube.rotation = worldRot;
+
+        Debug.Log(worldPos);
+        Debug.Log("Tracking Active");
     }
 }
