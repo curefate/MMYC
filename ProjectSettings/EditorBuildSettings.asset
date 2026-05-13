@@ -14,9 +14,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Workspace/Scenes/Test/Switch_Room_Test.unity
     guid: ceea54b701fba02488ec1b6c114d0718
-  - enabled: 1
+  - enabled: 0
     path: Assets/Workspace_Jasmine/New Scene.unity
     guid: 29c95b210816b184a961ce7c78dc1115
+  - enabled: 1
+    path: Assets/Workspace_Jasmine/TableScene_Jasmine.unity
+    guid: 47b1861e05cb5ed409adf4dfab320a94
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d58c00329e26d62479edf31cef69c53c, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
