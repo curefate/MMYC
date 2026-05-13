@@ -32,8 +32,23 @@ public class ControllerTracker : MonoBehaviour
             trackingSpace.rotation * localRot;
 
         // Move table
-        cube.position = worldPos;
-        cube.rotation = worldRot;
+        Vector3 currentPos = cube.position;
+
+// Only move on X/Z plane
+cube.position = new Vector3(
+    worldPos.x,
+    currentPos.y,
+    worldPos.z
+);
+
+// Only rotate around Y axis
+Vector3 euler = worldRot.eulerAngles;
+
+cube.rotation = Quaternion.Euler(
+    0,
+    euler.y,
+    0
+);
 
         Debug.Log(worldPos);
         Debug.Log("Tracking Active");
