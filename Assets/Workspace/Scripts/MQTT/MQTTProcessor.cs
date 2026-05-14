@@ -14,6 +14,7 @@ public class MQTTProcessor : M2MqttUnityClient
     public int Led_0 { get; private set; }
     public int Led_1 { get; private set; }
     public int Led_2 { get; private set; }
+    public int Riddle { get; private set; }
 
     public static MQTTProcessor Instance { get; private set; } = null;
 
@@ -43,6 +44,7 @@ public class MQTTProcessor : M2MqttUnityClient
             { mqttTopicPrefix + "led_0", value => Led_0 = int.TryParse(value, out var led0) ? led0 : Led_0 },
             { mqttTopicPrefix + "led_1", value => Led_1 = int.TryParse(value, out var led1) ? led1 : Led_1 },
             { mqttTopicPrefix + "led_2", value => Led_2 = int.TryParse(value, out var led2) ? led2 : Led_2 },
+            { mqttTopicPrefix + "riddle", value => Riddle = int.TryParse(value, out var riddle) ? riddle : Riddle },
         };
     }
 
