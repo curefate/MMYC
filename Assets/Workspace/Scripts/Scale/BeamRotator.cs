@@ -1,17 +1,20 @@
 using Fusion;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BeamRotator : NetworkBehaviour
 {
     public int Speed = 10;
     public float MaxAngle = 25f;
     public float MaxWeightDifference = 7f;
+    public UnityEvent OnEqual;
 
     [Networked]
     public float Angle { get; private set; }
 
     private float visualAngle;
     private float anglePerWeight => MaxAngle / MaxWeightDifference;
+    private float currentWeightDifference;
 
     public override void FixedUpdateNetwork()
     {
@@ -39,7 +42,14 @@ public class BeamRotator : NetworkBehaviour
         float weight_l = l0 + l1 + ScaleDef.LeftDefaultWeight;
         float weight_r = r0 + r1 + ScaleDef.RightDefaultWeight;
 
-        Angle = Mathf.Clamp((weight_l - weight_r) * anglePerWeight, -MaxAngle, MaxAngle);
+        float diff = weight_l - weight_r;
+        if (diff == 0 && currentWeightDifference != 0)
+        {
+            OnEqual.Invoke();
+        }
+        currentWeightDifference = diff;
+
+        Angle = Mathf.Clamp(currentWeightDifference * anglePerWeight, -MaxAngle, MaxAngle);
         Debug.Log($"Left: {weight_l}, Right: {weight_r}, Angle: {Angle}");
     }
 }

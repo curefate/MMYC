@@ -54,7 +54,7 @@ void loop() {
   client.publish((client_id + "hall_1").c_str(), String(value_1).c_str());
   client.publish((client_id + "hall_2").c_str(), String(value_2).c_str());
   client.publish((client_id + "hall_3").c_str(), String(value_3).c_str());
-  delay(500);
+  delay(1000);
 }
 
 bool ensureMqtt() {
