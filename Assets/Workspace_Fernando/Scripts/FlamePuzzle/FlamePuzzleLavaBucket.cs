@@ -1,44 +1,123 @@
 using UnityEngine;
+using Fusion;
 using TMPro;
 
-public class FlamePuzzleLavaBucket : MonoBehaviour
+public class FlamePuzzleLavaBucket : NetworkBehaviour
 {
-    // Reference to the player.
-    public FlamePuzzlePlayerState playerState;
+    // Shared flame assignment index across all headsets.
+    [Networked]
+    private int currentFlameIndex { get; set; }
 
-    // Keeps track of next flame color.
-    private int nextFlameIndex = 0;
+    [Header("Debug")]
+    public TMP_Text debugText;
 
-    // Flame assignment order.
-    private FlamePuzzlePlayerState.FlameColor[] flameOrder =
+    // =====================================================
+    // FIND PLAYER STATE
+    // =====================================================
+
+    private FlamePuzzlePlayerState GetPlayerState()
     {
-        FlamePuzzlePlayerState.FlameColor.Red,
-        FlamePuzzlePlayerState.FlameColor.Green,
-        FlamePuzzlePlayerState.FlameColor.Blue
-    };
+        FlamePuzzleNetworkPlayer[] players =
+            FindObjectsOfType<FlamePuzzleNetworkPlayer>();
 
-    // This function will be called by Meta events.
+        foreach (FlamePuzzleNetworkPlayer player in players)
+        {
+            // Find the local player.
+            if (player.Object.HasInputAuthority)
+            {
+                return player.playerState;
+            }
+        }
+
+        return null;
+    }
+
+    // =====================================================
+    // TOUCH EVENT
+    // =====================================================
+
     public void TouchLava()
     {
-        // Prevent duplicate flames.
-        if (playerState.hasFlame)
-            return;
+        debugText.text +=
+            "\nTouchLava called";
 
-        // Prevent overflow.
-        if (nextFlameIndex >= flameOrder.Length)
+        RPC_RequestFlame();
+    }
+
+    // =====================================================
+    // RPC
+    // =====================================================
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_RequestFlame()
+    {
+        debugText.text +=
+            "\nRPC started";
+
+        FlamePuzzlePlayerState playerState =
+            GetPlayerState();
+
+        if (playerState == null)
         {
-            playerState.debugText.text =
-                "All flame colors assigned.";
+            debugText.text +=
+                "\nPlayerState NULL";
 
             return;
         }
 
-        // Assign next flame.
-        FlamePuzzlePlayerState.FlameColor assignedColor =
-            flameOrder[nextFlameIndex];
+        playerState.debugText.text +=
+            "\nRPC_RequestFlame called";
 
-        playerState.AssignFlame(assignedColor);
+        // Prevent duplicate flames.
+        if (playerState.hasFlame)
+        {
+            playerState.debugText.text +=
+                "\nAlready has flame";
 
-        nextFlameIndex++;
+            return;
+        }
+
+        // Prevent overflow.
+        if (currentFlameIndex > 2)
+        {
+            playerState.debugText.text +=
+                "\nAll flame colors assigned.";
+
+            return;
+        }
+
+        playerState.debugText.text +=
+            "\nCurrent Flame Index: " +
+            currentFlameIndex;
+
+        switch (currentFlameIndex)
+        {
+            case 0:
+
+                playerState.AssignFlame(
+                    FlamePuzzlePlayerState.FlameColor.Red
+                );
+
+                break;
+
+            case 1:
+
+                playerState.AssignFlame(
+                    FlamePuzzlePlayerState.FlameColor.Green
+                );
+
+                break;
+
+            case 2:
+
+                playerState.AssignFlame(
+                    FlamePuzzlePlayerState.FlameColor.Blue
+                );
+
+                break;
+        }
+
+        currentFlameIndex =
+            currentFlameIndex + 1;
     }
 }
