@@ -66,9 +66,9 @@ public class CoffinAnim : NetworkBehaviour
         audioSource.Play();
         Quaternion initialRotation = CoffinTop.localRotation;
         float elapsedTime = 0f;
-        while (elapsedTime < 1f)
+        while (elapsedTime < 2.5f)
         {
-            float angle = Mathf.Lerp(0, coffin_move_angle, elapsedTime);
+            float angle = Mathf.Lerp(0, coffin_move_angle, elapsedTime / 2.5f);
             CoffinTop.localRotation = initialRotation * Quaternion.Euler(0, angle, 0);
             elapsedTime += Time.deltaTime;
             yield return null;
