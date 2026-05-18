@@ -1,6 +1,7 @@
 using UnityEngine;
 using Fusion;
 using TMPro;
+using System.Collections.Generic;
 
 public class FlamePuzzleLavaBucket : NetworkBehaviour
 {
@@ -12,21 +13,86 @@ public class FlamePuzzleLavaBucket : NetworkBehaviour
     public TMP_Text debugText;
 
     // =====================================================
+    // SPAWNED
+    // =====================================================
+
+    public override void Spawned()
+    {
+        Debug.Log("Bucket Spawned");
+
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nBUCKET SPAWNED";
+
+            debugText.text +=
+                "\nHas State Authority: " +
+                Object.HasStateAuthority;
+
+            debugText.text +=
+                "\nHas Input Authority: " +
+                Object.HasInputAuthority;
+        }
+
+        // Reset only on state authority.
+        if (Object != null && Object.HasStateAuthority)
+        {
+            currentFlameIndex = 0;
+        }
+    }
+
+    // =====================================================
     // FIND PLAYER STATE
     // =====================================================
 
-    private FlamePuzzlePlayerState GetPlayerState()
+    private FlamePuzzlePlayerState
+    GetPlayerState(int playerId)
     {
-        FlamePuzzleNetworkPlayer[] players =
-            FindObjectsOfType<FlamePuzzleNetworkPlayer>();
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nSearching Players...";
+        }
+
+        List<FlamePuzzleNetworkPlayer> players =
+            FlamePuzzleNetworkPlayer.AllPlayers;
+
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nPlayers Count: " +
+                players.Count;
+        }
 
         foreach (FlamePuzzleNetworkPlayer player in players)
         {
-            // Find the local player.
-            if (player.Object.HasInputAuthority)
+            // Safety.
+            if (player == null)
+                continue;
+
+            if (debugText != null)
             {
+                debugText.text +=
+                    "\nChecking Player ID: " +
+                    player.PlayerID;
+            }
+
+            if (player.PlayerID == playerId)
+            {
+                if (debugText != null)
+                {
+                    debugText.text +=
+                        "\nMATCH FOUND";
+                }
+
                 return player.playerState;
             }
+        }
+
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nNO MATCH";
         }
 
         return null;
@@ -38,10 +104,84 @@ public class FlamePuzzleLavaBucket : NetworkBehaviour
 
     public void TouchLava()
     {
-        debugText.text +=
-            "\nTouchLava called";
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\n--- TOUCH LAVA ---";
 
-        RPC_RequestFlame();
+            debugText.text +=
+                "\nTouchLava called";
+        }
+
+        // Runner safety.
+        if (Runner == null)
+        {
+            if (debugText != null)
+            {
+                debugText.text +=
+                    "\nRunner NULL";
+            }
+
+            return;
+        }
+
+        // Object safety.
+        if (Object == null)
+        {
+            if (debugText != null)
+            {
+                debugText.text +=
+                    "\nObject NULL";
+            }
+
+            return;
+        }
+
+        if (!Object.IsValid)
+        {
+            if (debugText != null)
+            {
+                debugText.text +=
+                    "\nObject INVALID";
+            }
+
+            return;
+        }
+
+        // Authority debug.
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nHas Input Authority: " +
+                Object.HasInputAuthority;
+
+            debugText.text +=
+                "\nHas State Authority: " +
+                Object.HasStateAuthority;
+
+            debugText.text +=
+                "\nRunner Exists: " +
+                (Runner != null);
+
+            debugText.text +=
+                "\nLocal Player ID: " +
+                Runner.LocalPlayer.PlayerId;
+
+            debugText.text +=
+                "\nCalling RPC...";
+        }
+
+        debugText.text +=
+            "\nRPC OBJECT VALID: " +
+            (Object != null);
+
+        debugText.text +=
+            "\nRPC OBJECT ID: " +
+            Object.Id;
+
+        RPC_RequestFlame(
+            Runner.LocalPlayer.PlayerId
+        );
     }
 
     // =====================================================
@@ -49,30 +189,59 @@ public class FlamePuzzleLavaBucket : NetworkBehaviour
     // =====================================================
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPC_RequestFlame()
+    public void RPC_RequestFlame(int playerId)
     {
+
         debugText.text +=
-            "\nRPC started";
+            "\nRPC ARRIVED OBJECT ID: " +
+            Object.Id;
 
-        FlamePuzzlePlayerState playerState =
-            GetPlayerState();
-
-        if (playerState == null)
+        if (debugText != null)
         {
             debugText.text +=
-                "\nPlayerState NULL";
+                "\nRPC RECEIVED";
+        }
+
+        // Fusion safety.
+        if (Object == null || !Object.IsValid)
+        {
+            if (debugText != null)
+            {
+                debugText.text +=
+                    "\nNetwork Object invalid";
+            }
 
             return;
         }
 
-        playerState.debugText.text +=
-            "\nRPC_RequestFlame called";
+        FlamePuzzlePlayerState playerState =
+            GetPlayerState(playerId);
+
+        if (playerState == null)
+        {
+            if (debugText != null)
+            {
+                debugText.text +=
+                    "\nPlayerState NULL";
+            }
+
+            return;
+        }
+
+        if (playerState.debugText != null)
+        {
+            playerState.debugText.text +=
+                "\nRPC_RequestFlame called";
+        }
 
         // Prevent duplicate flames.
         if (playerState.hasFlame)
         {
-            playerState.debugText.text +=
-                "\nAlready has flame";
+            if (playerState.debugText != null)
+            {
+                playerState.debugText.text +=
+                    "\nAlready has flame";
+            }
 
             return;
         }
@@ -80,15 +249,21 @@ public class FlamePuzzleLavaBucket : NetworkBehaviour
         // Prevent overflow.
         if (currentFlameIndex > 2)
         {
-            playerState.debugText.text +=
-                "\nAll flame colors assigned.";
+            if (playerState.debugText != null)
+            {
+                playerState.debugText.text +=
+                    "\nAll flame colors assigned.";
+            }
 
             return;
         }
 
-        playerState.debugText.text +=
-            "\nCurrent Flame Index: " +
-            currentFlameIndex;
+        if (playerState.debugText != null)
+        {
+            playerState.debugText.text +=
+                "\nCurrent Flame Index: " +
+                currentFlameIndex;
+        }
 
         switch (currentFlameIndex)
         {
@@ -117,7 +292,6 @@ public class FlamePuzzleLavaBucket : NetworkBehaviour
                 break;
         }
 
-        currentFlameIndex =
-            currentFlameIndex + 1;
+        currentFlameIndex++;
     }
 }

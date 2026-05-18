@@ -26,7 +26,7 @@ public class NetworkRotator : NetworkBehaviour
 
         IsRotating = !IsRotating;
     }
-
+    
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_ToggleRotation()
     {

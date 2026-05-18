@@ -32,6 +32,16 @@ public class FlamePuzzleManager : MonoBehaviour
         if (puzzleCompleted)
             return;
 
+        // Torch safety.
+        if (
+            blueTorch == null ||
+            redTorch == null ||
+            greenTorch == null
+        )
+        {
+            return;
+        }
+
         // Check all torches.
         if (
             blueTorch.IsActivated() &&
@@ -49,14 +59,32 @@ public class FlamePuzzleManager : MonoBehaviour
 
     private void CompletePuzzle()
     {
+        // Prevent duplicates.
+        if (puzzleCompleted)
+            return;
+
         puzzleCompleted = true;
 
-        debugText.text +=
-            "\nALL TORCHES ACTIVATED.";
+        Debug.Log(
+            "ALL TORCHES ACTIVATED."
+        );
+
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nALL TORCHES ACTIVATED.";
+        }
+
+        // Safety.
+        if (players == null)
+            return;
 
         // Remove flames from all players.
         foreach (FlamePuzzlePlayerState player in players)
         {
+            if (player == null)
+                continue;
+
             player.RemoveFlame();
         }
     }

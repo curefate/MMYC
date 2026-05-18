@@ -26,6 +26,7 @@ public class FlamePuzzleTorch : NetworkBehaviour
     [Networked]
     private NetworkBool isActivated { get; set; }
 
+    // Prevent duplicate visual spawning.
     private bool visualsSpawned = false;
 
     // Prevent multiple coroutine starts.
@@ -34,13 +35,19 @@ public class FlamePuzzleTorch : NetworkBehaviour
     // Store current coroutine.
     private Coroutine activationCoroutine;
 
+    // Spawned flame instance.
+    private GameObject spawnedFlame;
+
     // =====================================================
     // START
     // =====================================================
 
     private void Start()
     {
-        passwordText.SetActive(false);
+        if (passwordText != null)
+        {
+            passwordText.SetActive(false);
+        }
     }
 
     // =====================================================
@@ -49,6 +56,15 @@ public class FlamePuzzleTorch : NetworkBehaviour
 
     public void TouchTorch()
     {
+        // Fusion safety.
+        if (Object == null || !Object.IsValid)
+        {
+            Debug.LogWarning(
+                "Torch not fully spawned yet."
+            );
+            return;
+        }
+
         // Prevent reactivation.
         if (isActivated)
             return;
@@ -57,14 +73,32 @@ public class FlamePuzzleTorch : NetworkBehaviour
         if (isChecking)
             return;
 
+        // Safety.
+        if (playerState == null)
+        {
+            Debug.LogError(
+                "Torch missing playerState reference."
+            );
+            return;
+        }
+
         // Check if player has correct flame.
         if (!playerState.hasFlame)
             return;
 
-        if (playerState.currentFlameColor != requiredColor)
+        if (
+            playerState.currentFlameColor !=
+            requiredColor
+        )
         {
-            playerState.debugText.text +=
-                "\nWrong flame color.";
+            if (
+                playerState != null &&
+                playerState.debugText != null
+            )
+            {
+                playerState.debugText.text +=
+                    "\nWrong flame color.";
+            }
 
             return;
         }
@@ -80,6 +114,10 @@ public class FlamePuzzleTorch : NetworkBehaviour
 
     public void StopTouchTorch()
     {
+        // Fusion safety.
+        if (Object == null || !Object.IsValid)
+            return;
+
         // Ignore if already activated.
         if (isActivated)
             return;
@@ -88,15 +126,19 @@ public class FlamePuzzleTorch : NetworkBehaviour
         if (activationCoroutine != null)
         {
             StopCoroutine(activationCoroutine);
-
             activationCoroutine = null;
         }
 
         isChecking = false;
-        activationCoroutine = null;
 
-        playerState.debugText.text +=
-            "\nTorch hold canceled.";
+        if (
+            playerState != null &&
+            playerState.debugText != null
+        )
+        {
+            playerState.debugText.text +=
+                "\nTorch hold canceled.";
+        }
     }
 
     // =====================================================
@@ -107,8 +149,14 @@ public class FlamePuzzleTorch : NetworkBehaviour
     {
         isChecking = true;
 
-        playerState.debugText.text +=
-            "\nHolding torch...";
+        if (
+            playerState != null &&
+            playerState.debugText != null
+        )
+        {
+            playerState.debugText.text +=
+                "\nHolding torch...";
+        }
 
         yield return new WaitForSeconds(0.4f);
 
@@ -118,6 +166,8 @@ public class FlamePuzzleTorch : NetworkBehaviour
             ActivateTorch();
         }
 
+        isChecking = false;
+        activationCoroutine = null;
     }
 
     // =====================================================
@@ -126,81 +176,91 @@ public class FlamePuzzleTorch : NetworkBehaviour
 
     private void ActivateTorch()
     {
+        // Fusion safety.
+        if (Object == null || !Object.IsValid)
+            return;
+
         isActivated = true;
 
-        playerState.debugText.text +=
-            "\nTorch activated.";
-
-        /*
-
-        //####### MOVED ALL OF THIS TO THE RENDER FUSION FUNCTION ###### //
-
-        // Reveal password.
-        //passwordText.SetActive(true);
-
-        // Spawn flame VFX.
-        GameObject flame =
-            Instantiate(
-                torchFlamePrefab,
-                flameSpawnPoint.position,
-                Quaternion.identity
-            );
-        // Rotate flame upwards.
-        flame.transform.rotation =
-            Quaternion.Euler(-90f, 0f, 0f);
-
-        // Apply correct color.
-        ParticleSystem particleSystem =
-            flame.GetComponent<ParticleSystem>();
-
-        var main = particleSystem.main;
-
-        switch (requiredColor)
+        if (
+            playerState != null &&
+            playerState.debugText != null
+        )
         {
-            case FlamePuzzlePlayerState.FlameColor.Red:
-                main.startColor = Color.red;
-                break;
-
-            case FlamePuzzlePlayerState.FlameColor.Green:
-                main.startColor = Color.green;
-                break;
-
-            case FlamePuzzlePlayerState.FlameColor.Blue:
-                main.startColor = Color.blue;
-                break;
+            playerState.debugText.text +=
+                "\nTorch activated.";
         }
-        */
-
     }
+
+    // =====================================================
+    // ACTIVATION STATE
+    // =====================================================
 
     public bool IsActivated()
     {
+        // Prevent Fusion access errors.
+        if (Object == null || !Object.IsValid)
+            return false;
+
         return isActivated;
     }
 
+    // =====================================================
+    // RENDER
+    // =====================================================
+
     public override void Render()
     {
+        // Fusion safety.
+        if (Object == null || !Object.IsValid)
+            return;
+
         // Spawn visuals only once.
         if (isActivated && !visualsSpawned)
         {
             visualsSpawned = true;
 
-            passwordText.SetActive(true);
+            // Reveal password.
+            if (passwordText != null)
+            {
+                passwordText.SetActive(true);
+            }
+
+            // Safety checks.
+            if (
+                torchFlamePrefab == null ||
+                flameSpawnPoint == null
+            )
+            {
+                Debug.LogWarning(
+                    "Torch visuals missing prefab or spawn point."
+                );
+                return;
+            }
 
             // Spawn flame VFX.
-            GameObject flame =
+            spawnedFlame =
                 Instantiate(
                     torchFlamePrefab,
                     flameSpawnPoint.position,
                     Quaternion.identity
                 );
 
-            flame.transform.rotation =
+            // Rotate flame upwards.
+            spawnedFlame.transform.rotation =
                 Quaternion.Euler(-90f, 0f, 0f);
 
             // Apply correct color.
             ParticleSystem particleSystem =
-                flame.GetComponent<ParticleSystem>();
+                spawnedFlame.GetComponent<ParticleSystem>();
+
+            if (particleSystem == null)
+            {
+                Debug.LogWarning(
+                    "Torch flame missing ParticleSystem."
+                );
+                return;
+            }
 
             var main = particleSystem.main;
 
@@ -220,5 +280,4 @@ public class FlamePuzzleTorch : NetworkBehaviour
             }
         }
     }
-
 }

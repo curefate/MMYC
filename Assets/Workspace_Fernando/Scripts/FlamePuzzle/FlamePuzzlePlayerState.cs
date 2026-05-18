@@ -44,7 +44,15 @@ public class FlamePuzzlePlayerState : MonoBehaviour
 
         currentFlameColor = newColor;
 
-        debugText.text += "Player " + playerID + " received " + newColor + " flame.";
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nPlayer " +
+                playerID +
+                " received " +
+                newColor +
+                " flame.";
+        }
 
         SpawnFlames();
     }
@@ -59,9 +67,13 @@ public class FlamePuzzlePlayerState : MonoBehaviour
 
         currentFlameColor = FlameColor.None;
 
-        debugText.text +=
-            "Player " + playerID +
-            " flame removed.";
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nPlayer " +
+                playerID +
+                " flame removed.";
+        }
 
         RemoveFlames();
     }
@@ -73,30 +85,60 @@ public class FlamePuzzlePlayerState : MonoBehaviour
     private void SpawnFlames()
     {
         // Prevent duplicates.
-        if (leftFlameInstance != null)
+        if (
+            leftFlameInstance != null ||
+            rightFlameInstance != null
+        )
+        {
             return;
+        }
 
-        // Spawn left hand flame.
-        leftFlameInstance = Instantiate(flamePrefab, leftHand);
+        // Safety checks.
+        if (flamePrefab == null)
+        {
+            Debug.LogError(
+                "FlamePuzzlePlayerState: Flame prefab is NULL."
+            );
+            return;
+        }
 
-        debugText.text += "\nLeft Pos: " + leftHand.position.ToString();
+        if (leftHand == null || rightHand == null)
+        {
+            Debug.LogWarning(
+                "FlamePuzzlePlayerState: Hand references missing."
+            );
+            return;
+        }
 
-        // Spawn right hand flame.
-        rightFlameInstance = Instantiate(flamePrefab, rightHand);
+        // Spawn left flame.
+        leftFlameInstance =
+            Instantiate(flamePrefab, leftHand);
 
-        debugText.text += "\nRight Pos: " + rightHand.position.ToString();
+        // Spawn right flame.
+        rightFlameInstance =
+            Instantiate(flamePrefab, rightHand);
 
-        // Offset flames slightly above hands.
-        leftFlameInstance.transform.localPosition = new Vector3(0, -0.02f, 0.08f);
-        //leftFlameInstance.transform.localRotation = Quaternion.identity;
-        //leftFlameInstance.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f); // Resets Orientation, to be upwards
+        // Left flame offset.
+        leftFlameInstance.transform.localPosition =
+            new Vector3(0, -0.02f, 0.08f);
 
-        rightFlameInstance.transform.localPosition = new Vector3(0, -0.02f, 0.08f);
-        //rightFlameInstance.transform.localRotation = Quaternion.identity;
-        //rightFlameInstance.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f); // Resets Orientation, to be upwards
+        leftFlameInstance.transform.localRotation =
+            Quaternion.Euler(-90f, 0f, 0f);
+
+        // Right flame offset.
+        rightFlameInstance.transform.localPosition =
+            new Vector3(0, -0.02f, 0.08f);
+
+        rightFlameInstance.transform.localRotation =
+            Quaternion.Euler(-90f, 0f, 0f);
+
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nFlames spawned.";
+        }
 
         ApplyFlameColor();
-
     }
 
     // =====================================================
@@ -108,11 +150,13 @@ public class FlamePuzzlePlayerState : MonoBehaviour
         if (leftFlameInstance != null)
         {
             Destroy(leftFlameInstance);
+            leftFlameInstance = null;
         }
 
         if (rightFlameInstance != null)
         {
             Destroy(rightFlameInstance);
+            rightFlameInstance = null;
         }
     }
 
@@ -139,19 +183,39 @@ public class FlamePuzzlePlayerState : MonoBehaviour
                 break;
         }
 
-        SetParticleColor(leftFlameInstance, flameColor);
+        SetParticleColor(
+            leftFlameInstance,
+            flameColor
+        );
 
-        SetParticleColor(rightFlameInstance, flameColor);
+        SetParticleColor(
+            rightFlameInstance,
+            flameColor
+        );
     }
 
     // =====================================================
     // PARTICLE COLOR
     // =====================================================
 
-    private void SetParticleColor(GameObject flame, Color color)
+    private void SetParticleColor(
+        GameObject flame,
+        Color color
+    )
     {
+        if (flame == null)
+            return;
+
         ParticleSystem particleSystem =
             flame.GetComponent<ParticleSystem>();
+
+        if (particleSystem == null)
+        {
+            Debug.LogWarning(
+                "ParticleSystem missing from flame."
+            );
+            return;
+        }
 
         var main = particleSystem.main;
 
@@ -159,40 +223,50 @@ public class FlamePuzzlePlayerState : MonoBehaviour
     }
 
     // =====================================================
-    
+    // UPDATE
     // =====================================================
 
     private void Update()
     {
-
-        // HIDES THE FLAMES IF THE GAME LOOSES THE HAND TRACKING
-        if (leftHand.position.y < 0.15f)
+        // No flames active.
+        if (
+            leftFlameInstance == null &&
+            rightFlameInstance == null
+        )
         {
-            leftFlameInstance.SetActive(false);
-        }
-        else
-        {
-            leftFlameInstance.SetActive(true);
-        }
-        if (rightHand.position.y < 0.15f)
-        {
-            rightFlameInstance.SetActive(false);
-        }
-        else
-        {
-            rightFlameInstance.SetActive(true);
+            return;
         }
 
-        // RESET THE FLAMES ROTATION TO AVOID UNWANTED ROTATIONS DUE TO HAND MOVEMENTS
+        // Hand tracking missing.
+        if (leftHand == null || rightHand == null)
+        {
+            return;
+        }
+
+        // Left hand visibility.
         if (leftFlameInstance != null)
         {
-            leftFlameInstance.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+            bool leftVisible =
+                leftHand.position.y >= 0.15f;
+
+            leftFlameInstance.SetActive(leftVisible);
+
+            // Reset rotation.
+            leftFlameInstance.transform.rotation =
+                Quaternion.Euler(-90f, 0f, 0f);
         }
+
+        // Right hand visibility.
         if (rightFlameInstance != null)
         {
-            rightFlameInstance.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+            bool rightVisible =
+                rightHand.position.y >= 0.15f;
+
+            rightFlameInstance.SetActive(rightVisible);
+
+            // Reset rotation.
+            rightFlameInstance.transform.rotation =
+                Quaternion.Euler(-90f, 0f, 0f);
         }
-
     }
-
 }
