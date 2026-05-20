@@ -1,16 +1,35 @@
 using UnityEngine;
+using TMPro;
+using System.Collections;
+
 
 public class HeadsetTracker : MonoBehaviour
 {
     public Transform table;
+    public TextMeshProUGUI debugText;
 
     // Adjust this manually
     public Vector3 tableOffset =
         new Vector3(0, 0.75f, 0);
 
-    void Update()
+     private void Start()
     {
-        OVRCameraRig rig =
+        StartCoroutine(UpdateCoordinatesLoop());
+    }
+
+    IEnumerator UpdateCoordinatesLoop()
+    {
+        while (true)
+        {
+            UpdateCoordinates();
+
+            yield return new WaitForSeconds(0.33f);
+        }
+    }
+
+    void UpdateCoordinates()
+    {
+            OVRCameraRig rig =
             FindFirstObjectByType<OVRCameraRig>();
 
         Transform headset =
@@ -38,5 +57,11 @@ public class HeadsetTracker : MonoBehaviour
                 euler.y,
                 0
             );
+            Debug.Log("Trying to update the table ");
+            Debug.Log(table.position);
+            debugText.text = "/n trying to update the table " + table.position;
+        // Your coordinate update logic here
+        Debug.Log("Coordinates updated");
     }
-}
+
+  }
