@@ -4440,7 +4440,7 @@ MonoBehaviour:
   - {fileID: 6827948389313792959}
   - {fileID: 6904514947743115922}
   - {fileID: 6473126566961849434}
-  currentState: 
+  rooms: []
 --- !u!1 &919132148462633470
 GameObject:
   m_ObjectHideFlags: 0
