@@ -1,51 +1,151 @@
-using Fusion;
 using UnityEngine;
+using Fusion;
+using TMPro;
 
 public class FlamePuzzleLavaBucket : NetworkBehaviour
 {
-    private int currentFlameIndex = 0;
+    [Networked]
+    private int currentFlameIndex { get; set; }
+
+    [Header("Debug")]
+    public TMP_Text debugText;
+
+    // =====================================================
+    // SPAWNED
+    // =====================================================
+
+    public override void Spawned()
+    {
+        if (debugText != null)
+        {
+            debugText.text +=
+                "\nBUCKET SPAWNED";
+        }
+
+        if (Object.HasStateAuthority)
+        {
+            currentFlameIndex = 0;
+        }
+    }
+
+    // =====================================================
+    // TOUCH
+    // =====================================================
 
     public void TouchLava()
     {
-        NetworkObject localPlayerObject =
-            Runner.GetPlayerObject(Runner.LocalPlayer);
+        debugText.text +=
+            "\n--- TOUCH LAVA ---";
 
-        if (localPlayerObject == null)
+        //FlamePuzzlePlayerState localPlayer = FindFirstObjectByType<FlamePuzzlePlayerState>();
+        FlamePuzzlePlayerState localPlayer = FlamePuzzleNetworkPlayer.Local.playerState;
+
+        if (localPlayer == null)
+        {
+            debugText.text +=
+                "\nLOCAL PLAYER NULL";
+
             return;
+        }
 
-        FlamePuzzlePlayerState playerState =
-            localPlayerObject.GetComponent<FlamePuzzlePlayerState>();
+        // Prevent duplicate flames.
+        if (localPlayer.hasFlame)
+        {
+            debugText.text +=
+                "\nPLAYER ALREADY HAS FLAME";
 
-        if (playerState == null)
             return;
+        }
 
-        RPC_RequestFlame(playerState.Object.InputAuthority);
+        debugText.text +=
+            "\nREQUESTING FLAME RPC";
+
+        debugText.text +=
+            "\nHAS STATE AUTH: " +
+            Object.HasStateAuthority;
+
+        debugText.text +=
+            "\nHAS INPUT AUTH: " +
+            Object.HasInputAuthority;
+
+        debugText.text +=
+            "\nOBJECT VALID: " +
+            Object.IsValid;
+
+        //RPC_RequestFlame();
+        RPC_RequestFlame(localPlayer.GetComponent<NetworkObject>());
+        
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPC_RequestFlame(PlayerRef playerRef)
+    public void RPC_RequestFlame(NetworkObject playerObject) //RPC_RequestFlame()
     {
-        NetworkObject playerObject = Runner.GetPlayerObject(playerRef);
+        debugText.text += "\nRPC ACTUALLY ARRIVED";
 
-        if (playerObject == null)
+        debugText.text += "\nPLAYER OBJECT: " + playerObject.name;
+
+        FlamePuzzlePlayerState localPlayer = playerObject.GetComponent<FlamePuzzlePlayerState>();
+        
+        if (localPlayer != null)
+        {
+            debugText.text +=
+                "\nPLAYER STATE FOUND";
+        }
+        else
+        {
+            debugText.text +=
+                "\nPLAYER STATE NULL";
+        }
+
+        // Prevent duplicate flames.
+        if (localPlayer.hasFlame)
+        {
+            debugText.text +=
+                "\nPLAYER ALREADY HAS FLAME";
+
             return;
+        }
 
-        FlamePuzzlePlayerState playerState =
-            playerObject.GetComponent<FlamePuzzlePlayerState>();
+        // No more colors.
+        if (currentFlameIndex > 2)
+        {
+            debugText.text +=
+                "\nNO COLORS LEFT";
 
-        if (playerState == null)
             return;
+        }
 
-        if (playerState.hasFlame)
-            return;
+        switch (currentFlameIndex)
+        {
+            case 0:
 
-        playerState.AssignFlame(
-            (FlamePuzzlePlayerState.FlameColor)currentFlameIndex
-        );
+                localPlayer.AssignFlame(
+                    FlamePuzzlePlayerState.FlameColor.Red
+                );
+
+                break;
+
+            case 1:
+
+                localPlayer.AssignFlame(
+                    FlamePuzzlePlayerState.FlameColor.Green
+                );
+
+                break;
+
+            case 2:
+
+                localPlayer.AssignFlame(
+                    FlamePuzzlePlayerState.FlameColor.Blue
+                );
+
+                break;
+        }
 
         currentFlameIndex++;
 
-        if (currentFlameIndex > 2)
-            currentFlameIndex = 0;
+        debugText.text +=
+            "\nFLAME ASSIGNED";
     }
+
 }

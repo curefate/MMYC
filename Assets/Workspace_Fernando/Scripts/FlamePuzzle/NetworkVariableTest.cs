@@ -18,8 +18,7 @@ public class NetworkVariableTest : NetworkBehaviour
     {
         if (debugText != null)
         {
-            debugText.text =
-                "Value: " + testValue;
+            //debugText.text = "Value: " + testValue;
         }
     }
 }
