@@ -1,272 +1,78 @@
+using Fusion;
 using UnityEngine;
-using TMPro;
 
-public class FlamePuzzlePlayerState : MonoBehaviour
+public class FlamePuzzlePlayerState : NetworkBehaviour
 {
-    [Header("Player Identification")]
-    public int playerID;
-
-    [Header("Flame State")]
-    public bool hasFlame = false;
-
-    public FlameColor currentFlameColor = FlameColor.None;
-
-    [Header("Debug")]
-    public TMP_Text debugText;
-
-    [Header("Hand References")]
-    public Transform leftHand;
-
-    public Transform rightHand;
-
-    [Header("Flame VFX")]
-    public GameObject flamePrefab;
-
-    private GameObject leftFlameInstance;
-
-    private GameObject rightFlameInstance;
-
     public enum FlameColor
     {
-        None,
-        Red,
-        Green,
-        Blue
+        None = -1,
+        Red = 0,
+        Green = 1,
+        Blue = 2
     }
 
-    // =====================================================
-    // ASSIGN FLAME
-    // =====================================================
+    [Networked]
+    public bool hasFlame { get; set; }
+
+    [Networked]
+    public int flameColor { get; set; }
+
+    [Header("Flame Visuals")]
+    public GameObject redFlame;
+    public GameObject greenFlame;
+    public GameObject blueFlame;
+
+    public override void Render()
+    {
+        UpdateFlameVisuals();
+    }
 
     public void AssignFlame(FlameColor newColor)
     {
         hasFlame = true;
+        flameColor = (int)newColor;
 
-        currentFlameColor = newColor;
-
-        if (debugText != null)
-        {
-            debugText.text +=
-                "\nPlayer " +
-                playerID +
-                " received " +
-                newColor +
-                " flame.";
-        }
-
-        SpawnFlames();
+        UpdateFlameVisuals();
     }
-
-    // =====================================================
-    // REMOVE FLAME
-    // =====================================================
 
     public void RemoveFlame()
     {
         hasFlame = false;
+        flameColor = (int)FlameColor.None;
 
-        currentFlameColor = FlameColor.None;
-
-        if (debugText != null)
-        {
-            debugText.text +=
-                "\nPlayer " +
-                playerID +
-                " flame removed.";
-        }
-
-        RemoveFlames();
+        UpdateFlameVisuals();
     }
 
-    // =====================================================
-    // SPAWN FLAMES
-    // =====================================================
-
-    private void SpawnFlames()
+    private void UpdateFlameVisuals()
     {
-        // Prevent duplicates.
-        if (
-            leftFlameInstance != null ||
-            rightFlameInstance != null
-        )
-        {
+        if (redFlame != null)
+            redFlame.SetActive(false);
+
+        if (greenFlame != null)
+            greenFlame.SetActive(false);
+
+        if (blueFlame != null)
+            blueFlame.SetActive(false);
+
+        if (!hasFlame)
             return;
-        }
 
-        // Safety checks.
-        if (flamePrefab == null)
-        {
-            Debug.LogError(
-                "FlamePuzzlePlayerState: Flame prefab is NULL."
-            );
-            return;
-        }
-
-        if (leftHand == null || rightHand == null)
-        {
-            Debug.LogWarning(
-                "FlamePuzzlePlayerState: Hand references missing."
-            );
-            return;
-        }
-
-        // Spawn left flame.
-        leftFlameInstance =
-            Instantiate(flamePrefab, leftHand);
-
-        // Spawn right flame.
-        rightFlameInstance =
-            Instantiate(flamePrefab, rightHand);
-
-        // Left flame offset.
-        leftFlameInstance.transform.localPosition =
-            new Vector3(0, -0.02f, 0.08f);
-
-        leftFlameInstance.transform.localRotation =
-            Quaternion.Euler(-90f, 0f, 0f);
-
-        // Right flame offset.
-        rightFlameInstance.transform.localPosition =
-            new Vector3(0, -0.02f, 0.08f);
-
-        rightFlameInstance.transform.localRotation =
-            Quaternion.Euler(-90f, 0f, 0f);
-
-        if (debugText != null)
-        {
-            debugText.text +=
-                "\nFlames spawned.";
-        }
-
-        ApplyFlameColor();
-    }
-
-    // =====================================================
-    // REMOVE FLAMES
-    // =====================================================
-
-    private void RemoveFlames()
-    {
-        if (leftFlameInstance != null)
-        {
-            Destroy(leftFlameInstance);
-            leftFlameInstance = null;
-        }
-
-        if (rightFlameInstance != null)
-        {
-            Destroy(rightFlameInstance);
-            rightFlameInstance = null;
-        }
-    }
-
-    // =====================================================
-    // APPLY COLORS
-    // =====================================================
-
-    private void ApplyFlameColor()
-    {
-        Color flameColor = Color.red;
-
-        switch (currentFlameColor)
+        switch ((FlameColor)flameColor)
         {
             case FlameColor.Red:
-                flameColor = Color.red;
+                if (redFlame != null)
+                    redFlame.SetActive(true);
                 break;
 
             case FlameColor.Green:
-                flameColor = Color.green;
+                if (greenFlame != null)
+                    greenFlame.SetActive(true);
                 break;
 
             case FlameColor.Blue:
-                flameColor = Color.blue;
+                if (blueFlame != null)
+                    blueFlame.SetActive(true);
                 break;
-        }
-
-        SetParticleColor(
-            leftFlameInstance,
-            flameColor
-        );
-
-        SetParticleColor(
-            rightFlameInstance,
-            flameColor
-        );
-    }
-
-    // =====================================================
-    // PARTICLE COLOR
-    // =====================================================
-
-    private void SetParticleColor(
-        GameObject flame,
-        Color color
-    )
-    {
-        if (flame == null)
-            return;
-
-        ParticleSystem particleSystem =
-            flame.GetComponent<ParticleSystem>();
-
-        if (particleSystem == null)
-        {
-            Debug.LogWarning(
-                "ParticleSystem missing from flame."
-            );
-            return;
-        }
-
-        var main = particleSystem.main;
-
-        main.startColor = color;
-    }
-
-    // =====================================================
-    // UPDATE
-    // =====================================================
-
-    private void Update()
-    {
-        // No flames active.
-        if (
-            leftFlameInstance == null &&
-            rightFlameInstance == null
-        )
-        {
-            return;
-        }
-
-        // Hand tracking missing.
-        if (leftHand == null || rightHand == null)
-        {
-            return;
-        }
-
-        // Left hand visibility.
-        if (leftFlameInstance != null)
-        {
-            bool leftVisible =
-                leftHand.position.y >= 0.15f;
-
-            leftFlameInstance.SetActive(leftVisible);
-
-            // Reset rotation.
-            leftFlameInstance.transform.rotation =
-                Quaternion.Euler(-90f, 0f, 0f);
-        }
-
-        // Right hand visibility.
-        if (rightFlameInstance != null)
-        {
-            bool rightVisible =
-                rightHand.position.y >= 0.15f;
-
-            rightFlameInstance.SetActive(rightVisible);
-
-            // Reset rotation.
-            rightFlameInstance.transform.rotation =
-                Quaternion.Euler(-90f, 0f, 0f);
         }
     }
 }

@@ -373,10 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlamePuzzleTorch
   requiredColor: 3
-  playerState: {fileID: 0}
-  passwordText: {fileID: 649152057739977479}
-  torchFlamePrefab: {fileID: 5212312228957263510, guid: f91e1a8ad2448ea4ab34fc2cbb7e5e9b, type: 3}
-  flameSpawnPoint: {fileID: 3106605413339776593}
+  litVFX: {fileID: 0}
 --- !u!65 &2703050060254393618
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -431,19 +428,7 @@ MonoBehaviour:
         m_CallState: 2
   _whenUnhover:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3590958670594475852}
-        m_TargetAssemblyTypeName: FlamePuzzleTorch, Assembly-CSharp
-        m_MethodName: StopTouchTorch
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   _whenSelect:
     m_PersistentCalls:
       m_Calls: []
