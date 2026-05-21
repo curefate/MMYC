@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/WorkSpace/Scenes/MQTTTest.unity
+    path: Assets/WorkSpace/Scenes/Test/MQTTTest.unity
     guid: 573a60df7e1bbab4f9aaa0bada0f4d86
   - enabled: 0
     path: Assets/Old/Workspace/Scenes/Test/Test.unity
@@ -18,10 +18,10 @@ EditorBuildSettings:
     path: Assets/Old/Workspace/Scenes/Test/Switch_Room_Test.unity
     guid: ceea54b701fba02488ec1b6c114d0718
   - enabled: 0
-    path: Assets/WorkSpace/Scenes/MQTT_MR_TEST.unity
+    path: Assets/WorkSpace/Scenes/Test/MQTT_MR_TEST.unity
     guid: 971425f281d45de43a815d12f057fa79
   - enabled: 1
-    path: Assets/WorkSpace/Scenes/TableTest.unity
+    path: Assets/WorkSpace/Scenes/Test/TableTest.unity
     guid: 515e6dd4a73ffc74d93bd3c4e4cf7603
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d58c00329e26d62479edf31cef69c53c, type: 2}
