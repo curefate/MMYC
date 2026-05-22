@@ -1,85 +1,59 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class FlamePuzzleManager : MonoBehaviour
 {
     [Header("Torches")]
-
+    public FlamePuzzleTorch redTorch;
+    public FlamePuzzleTorch greenTorch;
     public FlamePuzzleTorch blueTorch;
 
-    public FlamePuzzleTorch redTorch;
-
-    public FlamePuzzleTorch greenTorch;
-
-    [Header("Players")]
-
-    public FlamePuzzlePlayerState[] players;
+    [Header("Final Canvas")]
+    public GameObject finalCanvas;
 
     [Header("Debug")]
-
     public TMP_Text debugText;
 
-    // Prevent duplicate completion.
-    private bool puzzleCompleted = false;
+    private bool redActivated;
+    private bool greenActivated;
+    private bool blueActivated;
 
-    // =====================================================
-    // UPDATE
-    // =====================================================
-
-    private void Update()
+    public void ActivateTorch(int colorIndex)
     {
-        // Ignore if already completed.
-        if (puzzleCompleted)
-            return;
-
-        // Torch safety.
-        if (
-            redTorch == null ||
-            greenTorch == null
-        )
+        switch (colorIndex)
         {
-            return;
+            case 0:
+                redActivated = true;
+                break;
+
+            case 1:
+                greenActivated = true;
+                break;
+
+            case 2:
+                blueActivated = true;
+                break;
         }
 
-        // TEMP TEST:
-        // Only require 2 torches for testing
-        if (
-            redTorch.IsActivated() &&
-            greenTorch.IsActivated()
-        )
-        {
-            CompletePuzzle();
-        }
+        debugText.text +=
+            "\nTORCH ACTIVATED: " +
+            colorIndex;
+
+        CheckCompletion();
     }
 
-    // =====================================================
-    // COMPLETE PUZZLE
-    // =====================================================
-
-    private void CompletePuzzle()
+    private void CheckCompletion()
     {
-        // Prevent duplicates.
-        if (puzzleCompleted)
-            return;
-
-        puzzleCompleted = true;
-
-        debugText.text += "\nALL TORCHES ACTIVATED.";
-
-        // Safety.
-        if (players == null)
-            return;
-
-        // Remove flames from all players.
-        foreach (FlamePuzzlePlayerState player in players)
+        if (
+            redActivated &&
+            greenActivated &&
+            blueActivated
+        )
         {
-            if (player == null)
-                continue;
+            debugText.text +=
+                "\nPUZZLE COMPLETE";
 
-            player.RemoveFlame();
+            finalCanvas.SetActive(true);
         }
-
-        debugText.text += "\nALL PLAYER FLAMES REMOVED.";
-
     }
 }

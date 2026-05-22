@@ -1701,12 +1701,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2316526942599441295, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2316526942599441295, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: 'NetworkedBehaviours.Array.data[0]'
       value: 
-      objectReference: {fileID: 620994878}
+      objectReference: {fileID: 0}
     - target: {fileID: 3590958670594475852, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: playerState
       value: 
@@ -1714,6 +1714,10 @@ PrefabInstance:
     - target: {fileID: 3590958670594475852, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: requiredColor
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3590958670594475852, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
+      propertyPath: requiredColorIndex
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6440135762390688621, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: m_Camera
@@ -2492,13 +2496,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b30c91066de6cf499f4af38b34757c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlamePuzzlePlayerState
-  _hasFlame:
-    _value: 0
-  _flameColorIndex: 0
-  debugText: {fileID: 587152783}
+  flamePrefab: {fileID: 5212312228957263510, guid: de8abf57af6837e44a0ff573050a9109, type: 3}
   leftHand: {fileID: 2092962851}
   rightHand: {fileID: 1186859604}
-  flamePrefab: {fileID: 5212312228957263510, guid: de8abf57af6837e44a0ff573050a9109, type: 3}
+  debugText: {fileID: 587152783}
+  _hasFlame: 0
+  _flameColorIndex: 0
   leftFlameInstance: {fileID: 0}
   rightFlameInstance: {fileID: 0}
 --- !u!114 &1064510446
@@ -2852,12 +2855,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2316526942599441295, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2316526942599441295, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: 'NetworkedBehaviours.Array.data[0]'
       value: 
-      objectReference: {fileID: 1151055411}
+      objectReference: {fileID: 0}
     - target: {fileID: 3590958670594475852, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: playerState
       value: 
@@ -2865,6 +2868,10 @@ PrefabInstance:
     - target: {fileID: 3590958670594475852, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: requiredColor
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3590958670594475852, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
+      propertyPath: requiredColorIndex
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6440135762390688621, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: m_Camera
@@ -4682,10 +4689,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332659b54d7568d44bc0d09c234be606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlamePuzzleManager
-  blueTorch: {fileID: 4934933117090251147}
   redTorch: {fileID: 620994878}
   greenTorch: {fileID: 1151055411}
-  players: []
+  blueTorch: {fileID: 4934933117090251147}
+  finalCanvas: {fileID: 0}
   debugText: {fileID: 587152783}
 --- !u!4 &2121899088
 Transform:
@@ -6456,18 +6463,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2316526942599441295, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2316526942599441295, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: 'NetworkedBehaviours.Array.data[0]'
       value: 
-      objectReference: {fileID: 4934933117090251147}
+      objectReference: {fileID: 0}
     - target: {fileID: 3590958670594475852, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: playerState
       value: 
       objectReference: {fileID: 1064510445}
     - target: {fileID: 3590958670594475852, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: requiredColor
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3590958670594475852, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
+      propertyPath: requiredColorIndex
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5145909259049418866, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
@@ -7510,6 +7521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlamePuzzleLavaBucket
   debugText: {fileID: 587152783}
+  _currentFlameIndex: 0
 --- !u!33 &8753358491996440136
 MeshFilter:
   m_ObjectHideFlags: 0
