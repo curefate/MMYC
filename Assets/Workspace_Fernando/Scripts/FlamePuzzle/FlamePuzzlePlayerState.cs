@@ -23,9 +23,9 @@ public class FlamePuzzlePlayerState : NetworkBehaviour
     [Header("Flame VFX")]
     public GameObject flamePrefab;
 
-    private GameObject leftFlameInstance;
+    public GameObject leftFlameInstance;
 
-    private GameObject rightFlameInstance;
+    public GameObject rightFlameInstance;
 
     public enum FlameColor
     {
@@ -39,28 +39,58 @@ public class FlamePuzzlePlayerState : NetworkBehaviour
     // ASSIGN FLAME
     // =====================================================
 
+    public void UpdateFlameColorOnly()
+    {
+        ApplyFlameColor();
+    }
+    
     public void AssignFlame(FlameColor newColor)
     {
+        /*
         hasFlame = true;
+        //SpawnFlames();
+
+        debugText.text +=
+            "\nASSIGNING COLOR INDEX: " +
+            flameColorIndex;
+
+        debugText.text +=
+            "\nASSIGNING COLOR ENUM: " +
+            newColor;
 
         switch (newColor)
         {
             case FlameColor.Red:
-                flameColorIndex = 1;
+                flameColorIndex = 0;
+                debugText.text +=
+                    "\nSYNCED INDEX: " +
+                    flameColorIndex;
+                //UpdateFlameColorOnly();
                 break;
 
             case FlameColor.Green:
-                flameColorIndex = 2;
+                flameColorIndex = 1;
+                debugText.text +=
+                    "\nSYNCED INDEX: " +
+                    flameColorIndex;
+                //UpdateFlameColorOnly();
                 break;
 
             case FlameColor.Blue:
-                flameColorIndex = 3;
+                flameColorIndex = 2;
+                debugText.text +=
+                    "\nSYNCED INDEX: " +
+                    flameColorIndex;
+                //UpdateFlameColorOnly();
                 break;
         }
+
+        ApplyFlameColor();
 
         debugText.text +=
             "\nFLAME ASSIGNED: " +
             newColor;
+        */
     }
 
     // =====================================================
@@ -83,17 +113,20 @@ public class FlamePuzzlePlayerState : NetworkBehaviour
     // SPAWN FLAMES
     // =====================================================
 
-    private void SpawnFlames()
+    public void SpawnFlames()
     {
-
-        if (!Object.HasStateAuthority)
+        // Only allow the LOCAL headset rig
+        // to spawn visual flames.
+        if (
+            Camera.main != null &&
+            !transform.IsChildOf(Camera.main.transform.root) &&
+            Camera.main.transform.root != transform
+        )
         {
             return;
         }
 
         debugText.text += "\nSPAWNING FLAMES";
-        debugText.text += "\n" + leftHand.name;
-        debugText.text += "\n" + rightHand.name;
 
         // Prevent duplicates.
         if (
@@ -121,6 +154,9 @@ public class FlamePuzzlePlayerState : NetworkBehaviour
             return;
         }
 
+        debugText.text += "\n" + leftHand.name;
+        debugText.text += "\n" + rightHand.name;
+
         // Spawn left flame.
         leftFlameInstance =
             Instantiate(flamePrefab, leftHand);
@@ -147,6 +183,7 @@ public class FlamePuzzlePlayerState : NetworkBehaviour
             "\nFlames spawned.";
 
         ApplyFlameColor();
+
     }
 
     // =====================================================
@@ -178,17 +215,24 @@ public class FlamePuzzlePlayerState : NetworkBehaviour
     {
         Color flameColor = Color.red;
 
+        if (Time.frameCount % 120 == 0)
+        {
+            debugText.text +=
+                "\nAPPLY COLOR INDEX: " +
+                flameColorIndex;
+        }
+
         switch (flameColorIndex)
         {
-            case 1:
+            case 0:
                 flameColor = Color.red;
                 break;
 
-            case 2:
+            case 1:
                 flameColor = Color.green;
                 break;
 
-            case 3:
+            case 2:
                 flameColor = Color.blue;
                 break;
         }
@@ -239,14 +283,23 @@ public class FlamePuzzlePlayerState : NetworkBehaviour
 
     private void Update()
     {
+        /*
         if (
             hasFlame &&
             leftFlameInstance == null &&
             rightFlameInstance == null
         )
         {
-            SpawnFlames();
+            // ONLY local headset spawns visuals.
+            if (
+                FlamePuzzleNetworkPlayer.Local != null &&
+                FlamePuzzleNetworkPlayer.Local.playerState == this
+            )
+            {
+                SpawnFlames();
+            }
         }
+        */
 
         // No flames active.
         if (
@@ -288,5 +341,43 @@ public class FlamePuzzlePlayerState : NetworkBehaviour
             rightFlameInstance.transform.rotation =
                 Quaternion.Euler(-90f, 0f, 0f);
         }
+
+        /*
+        if (
+            hasFlame &&
+            leftFlameInstance == null &&
+            rightFlameInstance == null
+        )
+        {
+            SpawnFlames();
+        }
+        */
+
+        /*
+        if (
+            flameColorIndex >= 0 &&
+            (
+                leftFlameInstance != null ||
+                rightFlameInstance != null
+            )
+        )
+        {
+            ApplyFlameColor();
+        }
+        */
+
+        //ApplyFlameColor();
+
     }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_ApplyFlameVisuals(int colorIndex)
+    {
+        flameColorIndex = colorIndex;
+
+        //SpawnFlames();
+
+        ApplyFlameColor();
+    }
+
 }

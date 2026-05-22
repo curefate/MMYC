@@ -5,7 +5,7 @@ using TMPro;
 public class FlamePuzzleLavaBucket : NetworkBehaviour
 {
     [Networked]
-    private int currentFlameIndex { get; set; }
+    public int currentFlameIndex { get; set; }
 
     [Header("Debug")]
     public TMP_Text debugText;
@@ -37,8 +37,16 @@ public class FlamePuzzleLavaBucket : NetworkBehaviour
         debugText.text +=
             "\n--- TOUCH LAVA ---";
 
+        if (FlamePuzzleNetworkPlayer.Local == null)
+        {
+            debugText.text +=
+                "\nLOCAL NETWORK PLAYER NULL";
+
+            return;
+        }
         //FlamePuzzlePlayerState localPlayer = FindFirstObjectByType<FlamePuzzlePlayerState>();
         FlamePuzzlePlayerState localPlayer = FlamePuzzleNetworkPlayer.Local.playerState;
+        debugText.text += "\nLOCAL NETWORK PLAYER FOUND";
 
         if (localPlayer == null)
         {
@@ -48,8 +56,10 @@ public class FlamePuzzleLavaBucket : NetworkBehaviour
             return;
         }
 
-        // Prevent duplicate flames.
-        if (localPlayer.hasFlame)
+        if (
+            localPlayer.leftFlameInstance != null ||
+            localPlayer.rightFlameInstance != null
+        )
         {
             debugText.text +=
                 "\nPLAYER ALREADY HAS FLAME";
@@ -72,12 +82,16 @@ public class FlamePuzzleLavaBucket : NetworkBehaviour
             "\nOBJECT VALID: " +
             Object.IsValid;
 
+        debugText.text += "\nREQUESTING FLAME RPC";
+
+        localPlayer.SpawnFlames();
         //RPC_RequestFlame();
         RPC_RequestFlame(localPlayer.GetComponent<NetworkObject>());
         
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    //[Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_RequestFlame(NetworkObject playerObject) //RPC_RequestFlame()
     {
         debugText.text += "\nRPC ACTUALLY ARRIVED";
@@ -115,37 +129,53 @@ public class FlamePuzzleLavaBucket : NetworkBehaviour
             return;
         }
 
+        debugText.text +=
+            "\nRPC CURRENT INDEX: " +
+            currentFlameIndex;
+
         switch (currentFlameIndex)
         {
             case 0:
-
-                localPlayer.AssignFlame(
-                    FlamePuzzlePlayerState.FlameColor.Red
-                );
+                
+                debugText.text += "\nASSIGNING RED";
+                localPlayer.hasFlame = true;
+                localPlayer.RPC_ApplyFlameVisuals(0);
+                //localPlayer.AssignFlame(FlamePuzzlePlayerState.FlameColor.Red);
 
                 break;
 
             case 1:
 
-                localPlayer.AssignFlame(
-                    FlamePuzzlePlayerState.FlameColor.Green
-                );
+                debugText.text += "\nASSIGNING GREEN";
+                localPlayer.hasFlame = true;
+                localPlayer.RPC_ApplyFlameVisuals(1);
+                //localPlayer.AssignFlame(FlamePuzzlePlayerState.FlameColor.Green);
 
                 break;
 
             case 2:
 
-                localPlayer.AssignFlame(
-                    FlamePuzzlePlayerState.FlameColor.Blue
-                );
+                debugText.text += "\nASSIGNING BLUE";
+                localPlayer.hasFlame = true;
+                localPlayer.RPC_ApplyFlameVisuals(2);
+                //localPlayer.AssignFlame(FlamePuzzlePlayerState.FlameColor.Blue);
 
                 break;
         }
 
+        debugText.text +=
+            "\nCURRENT FLAME INDEX BEFORE: " +
+            currentFlameIndex;
+
         currentFlameIndex++;
 
         debugText.text +=
+            "\nCURRENT FLAME INDEX AFTER: " +
+            currentFlameIndex;
+
+        debugText.text +=
             "\nFLAME ASSIGNED";
+
     }
 
 }

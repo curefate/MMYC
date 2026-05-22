@@ -318,13 +318,13 @@ public class FlamePuzzleTorch : NetworkBehaviour
         switch (requiredColor)
         {
             case FlamePuzzlePlayerState.FlameColor.Red:
-                return 1;
+                return 0;
 
             case FlamePuzzlePlayerState.FlameColor.Green:
-                return 2;
+                return 1;
 
             case FlamePuzzlePlayerState.FlameColor.Blue:
-                return 3;
+                return 2;
         }
 
         return 0;

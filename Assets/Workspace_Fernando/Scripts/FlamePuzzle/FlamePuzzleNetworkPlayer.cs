@@ -24,7 +24,6 @@ public class FlamePuzzleNetworkPlayer : NetworkBehaviour
     {
         AddDebug("NETWORK PLAYER SPAWNED");
 
-        // Prevent duplicates.
         if (!AllPlayers.Contains(this))
         {
             AllPlayers.Add(this);
@@ -34,7 +33,6 @@ public class FlamePuzzleNetworkPlayer : NetworkBehaviour
             );
         }
 
-        // Safety checks.
         if (Runner == null)
         {
             AddDebug("RUNNER NULL");
@@ -62,16 +60,26 @@ public class FlamePuzzleNetworkPlayer : NetworkBehaviour
             Object.HasStateAuthority
         );
 
-        // Store local reference.
-        //if (Object.HasInputAuthority)
+        // TEMP TEST
+        /*
         if (Object.HasStateAuthority)
         {
             Local = this;
 
             AddDebug("LOCAL PLAYER SET");
         }
+        */
 
-        // PlayerState check.
+        if (
+            Camera.main != null &&
+            Camera.main.transform.root == transform.root
+        )
+        {
+            Local = this;
+
+            AddDebug("LOCAL PLAYER SET");
+        }
+
         if (playerState != null)
         {
             AddDebug(
