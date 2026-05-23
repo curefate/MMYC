@@ -1,7 +1,9 @@
 using UnityEngine;
 using TMPro;
+using Fusion; //Added to use networkbehavior
 
-public class TorchPuzzleManager : MonoBehaviour
+//public class TorchPuzzleManager : MonoBehaviour
+public class TorchPuzzleManager : NetworkBehaviour
 {
     [Header("Hands")]
     public Transform leftHand;
@@ -115,11 +117,40 @@ public class TorchPuzzleManager : MonoBehaviour
             return;
         }
 
+        //Local Only Spawn
+        /*
+        leftFlame = Instantiate(flamePrefab, leftHand);
+        rightFlame = Instantiate(flamePrefab, rightHand);
+        */
+        
+        //Shared Online Spawn
+        debugText.text += "\nRUNNER TPM NULL: " + (Runner == null);
+
         leftFlame =
-            Instantiate(flamePrefab, leftHand);
+            Runner.Spawn(
+                flamePrefab,
+                leftHand.position,
+                Quaternion.identity
+            ).gameObject;
+
+        HandFlameFollow leftFollow =
+            leftFlame.GetComponent<HandFlameFollow>();
+
+        leftFollow.ownerManager = this;
+        leftFollow.isLeftHand = true;
 
         rightFlame =
-            Instantiate(flamePrefab, rightHand);
+            Runner.Spawn(
+                flamePrefab,
+                rightHand.position,
+                Quaternion.identity
+            ).gameObject;
+
+        HandFlameFollow rightFollow =
+            rightFlame.GetComponent<HandFlameFollow>();
+
+        rightFollow.ownerManager = this;
+        rightFollow.isLeftHand = false;
 
         leftFlame.transform.localPosition =
             new Vector3(0, -0.02f, 0.08f);

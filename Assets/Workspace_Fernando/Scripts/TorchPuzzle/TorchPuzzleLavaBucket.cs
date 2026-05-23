@@ -14,6 +14,8 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
 
     public void TouchLava()
     {
+        //debugText.text += "\nRUNNER TPLB NULL: " + (Runner == null);
+
         debugText.text +=
             "\n--- TOUCH LAVA ---";
 

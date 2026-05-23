@@ -27,11 +27,15 @@ public class TorchPuzzleTorch : NetworkBehaviour
 
     private void Start()
     {
+
+        
+
         debugText =
             GameObject
             .Find("DebugText")
             .GetComponent<TMP_Text>();
-
+        debugText.text += "\nRUNNER TPT NULL: " + (Runner == null);
+        
         if (passwordCanvas != null)
         {
             passwordCanvas.SetActive(false);
