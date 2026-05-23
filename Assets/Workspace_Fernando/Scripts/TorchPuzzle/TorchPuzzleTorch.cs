@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TorchPuzzleTorch : NetworkBehaviour
 {
+    public TorchPuzzleLavaBucket lavaBucket;
     [Header("Torch Settings")]
     public int requiredColorIndex;
 
@@ -18,7 +19,7 @@ public class TorchPuzzleTorch : NetworkBehaviour
     public GameObject passwordCanvas;
 
     [Networked]
-    private NetworkBool isActivated { get; set; }
+    public NetworkBool isActivated { get; private set; }
 
     private bool visualsSpawned;
 
@@ -41,17 +42,7 @@ public class TorchPuzzleTorch : NetworkBehaviour
             return;
         }
 
-        TorchPuzzleManager torchPuzzleManager =
-            FindFirstObjectByType<TorchPuzzleManager>();
-
-        if (torchPuzzleManager == null)
-        {
-            return;
-        }
-
-        int playerColor =
-            (int)torchPuzzleManager
-            .currentFlameColor - 1;
+        int playerColor = lavaBucket.ownFlameColorIndex;
 
         if (
             playerColor ==
@@ -144,10 +135,5 @@ public class TorchPuzzleTorch : NetworkBehaviour
             particle.main;
 
         main.startColor = flameColor;
-    }
-
-    public bool IsActivated()
-    {
-        return isActivated;
     }
 }

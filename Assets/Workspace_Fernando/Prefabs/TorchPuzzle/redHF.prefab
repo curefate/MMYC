@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7171780857497008881}
   - component: {fileID: 7677538697845444548}
   m_Layer: 0
-  m_Name: HandFlameVFX
+  m_Name: redHF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 1506842554
+  SortKey: 4038481891
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
@@ -324,7 +324,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 0, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

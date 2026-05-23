@@ -19,12 +19,24 @@ public class FollowHead : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!Object.HasStateAuthority) return;
-        OnBackToPosition?.Invoke();
+        RPC_OnBackToPosition();
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!Object.HasStateAuthority) return;
+        RPC_OnLeavePosition();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_OnBackToPosition()
+    {
+        OnBackToPosition?.Invoke();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_OnLeavePosition()
+    {
         OnLeavePosition?.Invoke();
     }
 }
