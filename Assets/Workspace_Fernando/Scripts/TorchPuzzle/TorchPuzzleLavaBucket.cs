@@ -14,9 +14,29 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
 
     public void TouchLava()
     {
+        debugText.text +=
+            "\n--- TOUCH LAVA ---";
+
         if (torchPuzzleManager == null)
         {
-            debugText.text += "\nNO TORCH MANAGER";
+            debugText.text +=
+                "\nNO TORCH MANAGER";
+
+            return;
+        }
+
+        debugText.text +=
+            "\nCURRENT INDEX: " +
+            currentColorIndex;
+
+
+        if (
+            torchPuzzleManager.currentFlameColor !=
+            TorchPuzzleManager.FlameColor.None
+        )
+        {
+            debugText.text +=
+                "\nPLAYER ALREADY HAS FLAMES";
 
             return;
         }
@@ -24,7 +44,10 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
         switch (currentColorIndex)
         {
             case 0:
-                debugText.text += "\nGIVING RED FLAMES";
+
+                debugText.text +=
+                    "\nGIVING RED FLAMES";
+
                 torchPuzzleManager.GiveFlames(
                     TorchPuzzleManager.FlameColor.Red
                 );
@@ -32,7 +55,10 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
                 break;
 
             case 1:
-                debugText.text += "\nGIVING GREEN FLAMES";
+
+                debugText.text +=
+                    "\nGIVING GREEN FLAMES";
+
                 torchPuzzleManager.GiveFlames(
                     TorchPuzzleManager.FlameColor.Green
                 );
@@ -40,7 +66,10 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
                 break;
 
             case 2:
-                debugText.text += "\nGIVING BLUE FLAMES";
+
+                debugText.text +=
+                    "\nGIVING BLUE FLAMES";
+
                 torchPuzzleManager.GiveFlames(
                     TorchPuzzleManager.FlameColor.Blue
                 );
@@ -49,9 +78,14 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
 
             default:
 
-                debugText.text += "\nNO COLORS LEFT";
+                debugText.text +=
+                    "\nNO COLORS LEFT";
+
                 return;
         }
+
+        debugText.text +=
+            "\nCALLING RPC";
 
         RPC_AdvanceBucketState();
     }
@@ -60,5 +94,10 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
     private void RPC_AdvanceBucketState()
     {
         currentColorIndex++;
+
+        debugText.text +=
+            "\nNEXT COLOR INDEX: " +
+            currentColorIndex;
     }
+
 }

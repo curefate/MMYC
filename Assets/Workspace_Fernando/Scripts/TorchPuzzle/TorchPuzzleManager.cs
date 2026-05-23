@@ -48,17 +48,52 @@ public class TorchPuzzleManager : MonoBehaviour
             "\nGIVING FLAMES";
     }
 
+    private void Start()
+    {
+        debugText.text +=
+            "\nTORCH PUZZLE READY";
+    }
+
     private void Update()
     {
+
+        if (leftFlame != null)
+        {
+            bool leftVisible =
+                leftHand.position.y >= 0.15f;
+
+            leftFlame.SetActive(leftVisible);
+
+            if (leftVisible)
+            {
+                leftFlame.transform.rotation =
+                    Quaternion.Euler(-90f, 0f, 0f);
+            }
+        }
+
+        if (rightFlame != null)
+        {
+            bool rightVisible =
+                rightHand.position.y >= 0.15f;
+
+            rightFlame.SetActive(rightVisible);
+
+            if (rightVisible)
+            {
+                rightFlame.transform.rotation =
+                    Quaternion.Euler(-90f, 0f, 0f);
+            }
+        }
+
         if (completionMessageShown)
         {
             return;
         }
 
         if (
-            redTorch.isActivated &&
-            greenTorch.isActivated &&
-            blueTorch.isActivated
+            redTorch.IsActivated() &&
+            greenTorch.IsActivated() /*&&
+            blueTorch.IsActivated()*/
         )
         {
             debugText.text +=
@@ -92,10 +127,10 @@ public class TorchPuzzleManager : MonoBehaviour
         rightFlame.transform.localPosition =
             new Vector3(0, -0.02f, 0.08f);
 
-        leftFlame.transform.localRotation =
+        leftFlame.transform.rotation =
             Quaternion.Euler(-90f, 0f, 0f);
 
-        rightFlame.transform.localRotation =
+        rightFlame.transform.rotation =
             Quaternion.Euler(-90f, 0f, 0f);
 
     }
@@ -168,4 +203,5 @@ public class TorchPuzzleManager : MonoBehaviour
         debugText.text +=
             "\nFLAMES REMOVED";
     }
+
 }

@@ -331,7 +331,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5602034701568377597}
   - component: {fileID: 137118328407694746}
-  - component: {fileID: 2316526942599441295}
   - component: {fileID: 5145909259049418866}
   - component: {fileID: 2703050060254393618}
   - component: {fileID: 4970443777181977327}
@@ -373,27 +372,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TorchPuzzleTorch
   requiredColorIndex: 0
+  torchFlamePrefab: {fileID: 5212312228957263510, guid: f91e1a8ad2448ea4ab34fc2cbb7e5e9b, type: 3}
+  flameSpawnPoint: {fileID: 3106605413339776593}
   passwordCanvas: {fileID: 649152057739977479}
   debugText: {fileID: 0}
-  isActivated: 0
---- !u!114 &2316526942599441295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5964650646159685563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 0
-  ObjectInterest: 1
-  Flags: 262144
-  NestedObjects: []
-  NetworkedBehaviours: []
-  ForceRemoteRenderTimeframe: 0
 --- !u!114 &5145909259049418866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,6 +778,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1822022978632206092}
+  - component: {fileID: 5933741405842148766}
   m_Layer: 0
   m_Name: TorchPrefab
   m_TagString: Untagged
@@ -822,3 +805,22 @@ Transform:
   - {fileID: 2574765427371602795}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5933741405842148766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399063521260609594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 1719167342
+  ObjectInterest: 1
+  Flags: 786433
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 137118328407694746}
+  ForceRemoteRenderTimeframe: 0
