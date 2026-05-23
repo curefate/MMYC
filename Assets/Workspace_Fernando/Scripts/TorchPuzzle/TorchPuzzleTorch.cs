@@ -17,9 +17,6 @@ public class TorchPuzzleTorch : NetworkBehaviour
     [Header("Canvas")]
     public GameObject passwordCanvas;
 
-    [Header("Debug")]
-    public TMP_Text debugText;
-
     [Networked]
     private NetworkBool isActivated { get; set; }
 
@@ -27,11 +24,6 @@ public class TorchPuzzleTorch : NetworkBehaviour
 
     private void Start()
     {
-        debugText =
-            GameObject
-            .Find("DebugText")
-            .GetComponent<TMP_Text>();
-
         if (passwordCanvas != null)
         {
             passwordCanvas.SetActive(false);
@@ -40,21 +32,12 @@ public class TorchPuzzleTorch : NetworkBehaviour
 
     public void TouchTorch()
     {
-        debugText.text +=
-            "\n--- TOUCH TORCH ---";
-
         if (Object == null || !Object.IsValid)
         {
-            debugText.text +=
-                "\nOBJECT INVALID";
-
             return;
         }
         if (isActivated)
         {
-            debugText.text +=
-                "\nTORCH ALREADY ACTIVATED";
-
             return;
         }
 
@@ -63,9 +46,6 @@ public class TorchPuzzleTorch : NetworkBehaviour
 
         if (torchPuzzleManager == null)
         {
-            debugText.text +=
-                "\nMANAGER NULL";
-
             return;
         }
 
@@ -73,26 +53,13 @@ public class TorchPuzzleTorch : NetworkBehaviour
             (int)torchPuzzleManager
             .currentFlameColor - 1;
 
-        debugText.text +=
-            "\nPLAYER COLOR: " +
-            playerColor;
-
         if (
             playerColor ==
             requiredColorIndex
         )
         {
-            debugText.text +=
-                "\nCORRECT TORCH";
-
             RPC_ActivateTorch();
         }
-        else
-        {
-            debugText.text +=
-                "\nWRONG COLOR";
-        }
-
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -125,15 +92,11 @@ public class TorchPuzzleTorch : NetworkBehaviour
         {
             return;
         }
-
         if (
             torchFlamePrefab == null ||
             flameSpawnPoint == null
         )
         {
-            debugText.text +=
-                "\nTORCH FLAME REFERENCES NULL";
-
             return;
         }
 
@@ -148,9 +111,6 @@ public class TorchPuzzleTorch : NetworkBehaviour
             Quaternion.Euler(-90f, 0f, 0f);
 
         ApplyTorchColor();
-
-        debugText.text +=
-            "\nTORCH FLAME SPAWNED";
     }
 
     private void ApplyTorchColor()

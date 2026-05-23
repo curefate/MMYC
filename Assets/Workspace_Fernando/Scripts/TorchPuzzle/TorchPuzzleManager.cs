@@ -15,9 +15,6 @@ public class TorchPuzzleManager : MonoBehaviour
     public TorchPuzzleTorch greenTorch;
     public TorchPuzzleTorch blueTorch;
 
-    [Header("Debug")]
-    public TMP_Text debugText;
-
     private GameObject leftFlame;
     private GameObject rightFlame;
 
@@ -43,15 +40,6 @@ public class TorchPuzzleManager : MonoBehaviour
         SpawnFlames();
 
         ApplyFlameColor();
-
-        debugText.text +=
-            "\nGIVING FLAMES";
-    }
-
-    private void Start()
-    {
-        debugText.text +=
-            "\nTORCH PUZZLE READY";
     }
 
     private void Update()
@@ -96,9 +84,6 @@ public class TorchPuzzleManager : MonoBehaviour
             blueTorch.IsActivated()*/
         )
         {
-            debugText.text +=
-                "\nTURN OFF ALL FLAMES ON HANDS";
-
             RemoveFlames();
 
             completionMessageShown = true;
@@ -199,9 +184,5 @@ public class TorchPuzzleManager : MonoBehaviour
 
         currentFlameColor =
             FlameColor.None;
-
-        debugText.text +=
-            "\nFLAMES REMOVED";
     }
-
 }

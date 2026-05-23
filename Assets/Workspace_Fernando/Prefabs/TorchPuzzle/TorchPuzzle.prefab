@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 683637532174529774}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 2.2546632, y: 0.1964231, z: 1.7349648}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -53,7 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TorchPuzzleLavaBucket
   _currentColorIndex: 0
   torchPuzzleManager: {fileID: 0}
-  debugText: {fileID: 3843900125333084454}
 --- !u!114 &8930867852055693972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 777153223
+  SortKey: 3529085930
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
@@ -499,7 +498,7 @@ Transform:
   m_GameObject: {fileID: 5222253747709640618}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 2.2546632, y: 0.1964231, z: 1.7349648}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 99.999985, z: 99.999985}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -538,7 +537,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 421948ca47e1fc747b6c06bee6ec9d95, type: 2}
+  - {fileID: 2100000, guid: 712496a2399767b46a6121f5dca588bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -587,7 +586,7 @@ Transform:
   m_GameObject: {fileID: 7110087679905882932}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0020001568, y: 0.020050168, z: 0.005000055}
+  m_LocalPosition: {x: 2.2526631, y: 0.21647327, z: 1.739965}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -887,7 +886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1892280331474289857
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1067,7 +1066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5933741405842148766, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: SortKey
-      value: 1185982670
+      value: 2591945827
       objectReference: {fileID: 0}
     - target: {fileID: 8399063521260609594, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: m_Name
@@ -1169,7 +1168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5933741405842148766, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: SortKey
-      value: 2287750410
+      value: 916738493
       objectReference: {fileID: 0}
     - target: {fileID: 6875222884373232100, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -1267,7 +1266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5933741405842148766, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: SortKey
-      value: 2735793987
+      value: 2749074411
       objectReference: {fileID: 0}
     - target: {fileID: 6875222884373232100, guid: 0f121a6788f6078449159eb343e446c0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
