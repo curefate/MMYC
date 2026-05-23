@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class FlamePuzzleTorch : MonoBehaviour
+public class TorchPuzzleTorch : MonoBehaviour
 {
     [Header("Torch Settings")]
     public int requiredColorIndex;
@@ -11,6 +11,9 @@ public class FlamePuzzleTorch : MonoBehaviour
 
     [Header("Debug")]
     public TMP_Text debugText;
+
+    [HideInInspector]
+    public bool isActivated;
 
     private void Start()
     {
@@ -30,45 +33,34 @@ public class FlamePuzzleTorch : MonoBehaviour
         debugText.text +=
             "\n--- TOUCH TORCH ---";
 
-        if (FlamePuzzleNetworkPlayer.Local == null)
+        TorchPuzzleManager torchPuzzleManager =
+            FindFirstObjectByType<TorchPuzzleManager>();
+
+        if (torchPuzzleManager == null)
         {
             debugText.text +=
-                "\nLOCAL PLAYER NULL";
+                "\nMANAGER NULL";
 
             return;
         }
 
-        FlamePuzzlePlayerState playerState =
-            FlamePuzzleNetworkPlayer.Local
-            .playerState;
-
-        if (playerState == null)
-        {
-            debugText.text +=
-                "\nPLAYER STATE NULL";
-
-            return;
-        }
-
-        if (!playerState.hasFlame)
-        {
-            debugText.text +=
-                "\nPLAYER HAS NO FLAME";
-
-            return;
-        }
+        int playerColor =
+            (int)torchPuzzleManager
+            .currentFlameColor - 1;
 
         debugText.text +=
             "\nPLAYER COLOR: " +
-            playerState.flameColorIndex;
+            playerColor;
 
         if (
-            playerState.flameColorIndex ==
+            playerColor ==
             requiredColorIndex
         )
         {
             debugText.text +=
                 "\nCORRECT TORCH";
+
+            isActivated = true;
 
             passwordCanvas.SetActive(true);
         }

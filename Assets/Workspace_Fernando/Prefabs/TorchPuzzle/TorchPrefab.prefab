@@ -330,14 +330,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5602034701568377597}
-  - component: {fileID: 3590958670594475852}
-  - component: {fileID: 2703050060254393618}
+  - component: {fileID: 137118328407694746}
+  - component: {fileID: 2316526942599441295}
   - component: {fileID: 5145909259049418866}
+  - component: {fileID: 2703050060254393618}
   - component: {fileID: 4970443777181977327}
   - component: {fileID: 7643496789779571125}
   - component: {fileID: 4958106735272062282}
   - component: {fileID: 606872262779051175}
-  - component: {fileID: 2316526942599441295}
   m_Layer: 0
   m_Name: TorchCollider
   m_TagString: Untagged
@@ -360,7 +360,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1822022978632206092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3590958670594475852
+--- !u!114 &137118328407694746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,33 +369,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 5964650646159685563}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ba75cc1c0cfe0f4c90afefbad937f55, type: 3}
+  m_Script: {fileID: 11500000, guid: 3090384ef2fbc6244b05d2a1deb5a783, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FlamePuzzleTorch
+  m_EditorClassIdentifier: Assembly-CSharp::TorchPuzzleTorch
   requiredColorIndex: 0
   passwordCanvas: {fileID: 649152057739977479}
   debugText: {fileID: 0}
---- !u!65 &2703050060254393618
-BoxCollider:
+  isActivated: 0
+--- !u!114 &2316526942599441295
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5964650646159685563}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.17, y: 0.3, z: 0.17}
-  m_Center: {x: -0.0030884035, y: 0.07412368, z: 0.0010295212}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 0
+  ObjectInterest: 1
+  Flags: 262144
+  NestedObjects: []
+  NetworkedBehaviours: []
+  ForceRemoteRenderTimeframe: 0
 --- !u!114 &5145909259049418866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,8 +413,8 @@ MonoBehaviour:
   _whenHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3590958670594475852}
-        m_TargetAssemblyTypeName: FlamePuzzleTorch, Assembly-CSharp
+      - m_Target: {fileID: 137118328407694746}
+        m_TargetAssemblyTypeName: TorchPuzzleTorch, Assembly-CSharp
         m_MethodName: TouchTorch
         m_Mode: 1
         m_Arguments:
@@ -442,6 +440,27 @@ MonoBehaviour:
   _whenCancel:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &2703050060254393618
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5964650646159685563}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.17, y: 0.3, z: 0.17}
+  m_Center: {x: -0.0030884035, y: 0.07412368, z: 0.0010295212}
 --- !u!114 &4970443777181977327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,24 +650,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.Surfaces.BoundsClipper
   _position: {x: -0.003088403, y: 0.07412368, z: 0.001029521}
   _size: {x: 0.17, y: 0.3, z: 0.17}
---- !u!114 &2316526942599441295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5964650646159685563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 0
-  ObjectInterest: 1
-  Flags: 262144
-  NestedObjects: []
-  NetworkedBehaviours: []
-  ForceRemoteRenderTimeframe: 0
 --- !u!1 &6132648993440176712
 GameObject:
   m_ObjectHideFlags: 0
