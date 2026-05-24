@@ -13,6 +13,7 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
     public TorchPuzzleTorch redTorch;
     public TorchPuzzleTorch greenTorch;
     public TorchPuzzleTorch blueTorch;
+    public AudioClip lavaSound;
 
     public int ownFlameColorIndex { get; private set; } = -1;
 
@@ -21,6 +22,12 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
 
     private NetworkObject leftFlame;
     private NetworkObject rightFlame;
+    private AudioSource audioSource;
+
+    public override void Spawned()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public override void FixedUpdateNetwork()
     {
@@ -58,6 +65,7 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
     private void GiveFlames()
     {
         SpawnFlames();
+        RPC_PlayLavaSound();
     }
 
     private void SpawnFlames()
@@ -101,4 +109,9 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
         obj.gameObject.SetActive(active);
     }
 
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    void RPC_PlayLavaSound()
+    {
+        audioSource.PlayOneShot(lavaSound);
+    }
 }

@@ -1508,11 +1508,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CoffinAnim
   CoffinTop: {fileID: 2063675278219461225}
   Mummy: {fileID: 3139788791266133402}
+  Door: {fileID: 0}
+  RiddleTextMesh: {fileID: 0}
+  DoorOpenClip: {fileID: 8300000, guid: 1db53b31e2bff8444854ed416a6484ba, type: 3}
   CoffinMoveClip: {fileID: 8300000, guid: 6a832ac30e7265a4099847be7cdec999, type: 3}
   CartoonClip: {fileID: 8300000, guid: 5a1b59b5df73b6d48a8132b41733c649, type: 3}
+  IntroClips:
+  - {fileID: 8300000, guid: 46b5370f526e1ab45966620b026a24c5, type: 3}
+  - {fileID: 8300000, guid: 048ab21a27b72d7498794fbb37417374, type: 3}
   RiddleClips:
-  - {fileID: 8300000, guid: 6a832ac30e7265a4099847be7cdec999, type: 3}
-  _IfAnimDone: 0
+  - {fileID: 8300000, guid: 18de0aa6e68f15d49b4c2d46da9032dd, type: 3}
+  - {fileID: 8300000, guid: 35888fb3e2e8f684299df5ffe8e03da2, type: 3}
+  IntroTexts:
+  - "Who dares to disturb my slumber when I have slept for thousands of years?! This
+    will be punished. A riddle will be told, if answered correctly all of you are
+    free to go, wrong answer and you will have to stay here forever. One of the objects
+    you have collected in one of my puzzles will answer the riddle. Place the object
+    you have chosen on the table in front of you and see if you have chosen the correct
+    one\u2026."
+  - "Vem v\xE5gar att st\xF6ra min s\xF6mn n\xE4r jag sovit i flera tusen \xE5r!!!!!
+    Detta kommer att bli straffat. Jag kommer ge er en g\xE5ta, om ni svarar r\xE4tt
+    \xE4r ni alla fria att g\xE5, svarar ni fel s\xE5 f\xF6rlorar en av er visionen.
+    Vem det blir \xE5terst\xE5r att se, svara s\xE5 f\xE5r vi se. "
+  RiddleTexts:
+  - 'I am always near, but never far.\nI am always around, but never seen.\nI am
+    often avoided, but I always catch up.\nI will come when your old and grey, or
+    maybe even the very next day.\nI will come with cold embrace, and give you rest
+    with a chill kiss on your face.\nI come in many forms whether it''s irony, love,
+    laughter, or hate.\nI am everyone''s final fate. '
+  - "Jag f\xF6ljer dig varje \\ndag, men du kan aldrig springa ifr\xE5n mig. \\nJag
+    syns aldrig med \xF6gon, men alla vet att jag finns. \\nVissa m\xF6ter mig n\xE4r
+    de \xE4r v\xE4ldigt gamla, andra mycket tidigare. \\nIngen vill tr\xE4ffa mig,
+    men alla g\xF6r det n\xE5gon g\xE5ng. \\nVad \xE4r jag?"
+  OnAnswerCorrect:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnswerWrong:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &1936221285402608798
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1570,7 +1603,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.7
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
