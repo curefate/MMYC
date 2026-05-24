@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,7 +7,14 @@ public class FollowHead : NetworkBehaviour
 {
     public Vector3 offset;
     public UnityEvent OnBackToPosition;
-    public UnityEvent OnLeavePosition;
+    public List<AudioClip> audioClips;
+    public bool isMultipleActivatable;
+    [Networked] public bool isActivated { get; private set; }
+
+    public override void Spawned()
+    {
+        OnBackToPosition.AddListener(() => GetComponent<AudioSource>().PlayOneShot(audioClips[MQTTProcessor.Instance.Riddle]));
+    }
 
     public override void FixedUpdateNetwork()
     {
@@ -22,21 +30,11 @@ public class FollowHead : NetworkBehaviour
         RPC_OnBackToPosition();
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (!Object.HasStateAuthority) return;
-        RPC_OnLeavePosition();
-    }
-
     [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_OnBackToPosition()
     {
+        if (isActivated && !isMultipleActivatable) return;
         OnBackToPosition?.Invoke();
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    private void RPC_OnLeavePosition()
-    {
-        OnLeavePosition?.Invoke();
+        isActivated = true;
     }
 }

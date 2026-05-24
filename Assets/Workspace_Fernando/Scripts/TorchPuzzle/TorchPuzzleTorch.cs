@@ -57,6 +57,7 @@ public class TorchPuzzleTorch : NetworkBehaviour
     private void RPC_ActivateTorch()
     {
         isActivated = true;
+        MQTTProcessor.Instance.PublishMessage($"MMYC/led_{requiredColorIndex}", "1");
     }
 
     public override void Render()
