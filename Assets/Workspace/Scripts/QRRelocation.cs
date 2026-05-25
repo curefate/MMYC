@@ -7,6 +7,7 @@ public class QRRelocation : NetworkBehaviour
 {
     public Transform root;
     public Vector3 offset;
+    public string payload;
 
     [Networked] private bool isDone { get; set; }
 
@@ -24,6 +25,12 @@ public class QRRelocation : NetworkBehaviour
 
         if (trackable == null) return;
         if (isDone) return;
+
+        if (trackable.MarkerPayloadString != payload)
+        {
+            Debug.LogError($"QRRelocation trackable payload mismatch: {trackable.MarkerPayloadString} != {payload}");
+            return;
+        }
 
         target = trackable.transform;
 

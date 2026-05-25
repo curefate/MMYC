@@ -76,7 +76,7 @@ public class CoffinAnim : NetworkBehaviour
         var doorScale = Door.localScale;
         while (elapsedTime < audioSource.clip.length)
         {
-            Door.position = doorPos - new Vector3(0, Mathf.Lerp(0, 1, elapsedTime / audioSource.clip.length), 0);
+            Door.position = doorPos - new Vector3(0, Mathf.Lerp(0, 2, elapsedTime / audioSource.clip.length), 0);
             Door.localScale = new Vector3(doorScale.x, Mathf.Lerp(1, 0.5f, elapsedTime / audioSource.clip.length), doorScale.z);
             elapsedTime += Time.deltaTime;
             yield return null;
