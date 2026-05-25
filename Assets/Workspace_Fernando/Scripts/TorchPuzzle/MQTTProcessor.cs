@@ -38,7 +38,12 @@ public class MQTTProcessor : M2MqttUnityClient
 
         topicToProcessor = new Dictionary<string, Action<string>>
         {
-            { mqttTopicPrefix + "story_language", value => StoryLanguage = value.Trim().ToLower()},
+          { mqttTopicPrefix + "story_language", value =>
+    {
+        StoryLanguage = value.Trim().ToLower();
+        Debug.Log("MQTT StoryLanguage changed to: " + StoryLanguage);
+    }
+},
             { mqttTopicPrefix + "hall_0", value => Hall_0 = int.TryParse(value, out var hall0) ? hall0 : Hall_0 },
             { mqttTopicPrefix + "hall_1", value => Hall_1 = int.TryParse(value, out var hall1) ? hall1 : Hall_1 },
             { mqttTopicPrefix + "hall_2", value => Hall_2 = int.TryParse(value, out var hall2) ? hall2 : Hall_2 },
@@ -120,5 +125,16 @@ public void PublishStoryLanguage(string language)
         PublishMessage("MMYC/led_1", "0");
         PublishMessage("MMYC/led_2", "0");
     }
+    // Jaz helper 
+    public void TurnOnEN(){
+        Debug.Log("TurnonEN");
+        PublishMessage("MMYC/story_language", "en");
+    }
+    public void TurnOnSV()
+    {
+        Debug.Log("TurnOnSV");
+        PublishMessage("MMYC/story_language", "sv");
+    }
+    
 
 }

@@ -3327,18 +3327,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8651664094840884349, guid: 54a6a33712b376741b33b049dbe3c8dc, type: 3}
-      propertyPath: storyAudio
-      value: 
-      objectReference: {fileID: 1391266296}
-    - target: {fileID: 8651664094840884349, guid: 54a6a33712b376741b33b049dbe3c8dc, type: 3}
-      propertyPath: englishStory
-      value: 
-      objectReference: {fileID: 8300000, guid: d45b8b357069443539f04cf6938b98fa, type: 3}
-    - target: {fileID: 8651664094840884349, guid: 54a6a33712b376741b33b049dbe3c8dc, type: 3}
-      propertyPath: swedishStory
-      value: 
-      objectReference: {fileID: 8300000, guid: 800777a90a5e8439fa6260fb530e1baf, type: 3}
-    - target: {fileID: 8651664094840884349, guid: 54a6a33712b376741b33b049dbe3c8dc, type: 3}
       propertyPath: OnLeavePosition.m_PersistentCalls.m_Calls.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -3602,7 +3590,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
