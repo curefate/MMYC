@@ -13,16 +13,14 @@ public class CoffinAnim : NetworkBehaviour
     public Transform CoffinTop;
     public Transform Mummy;
     public Transform Door;
-    public TextMeshProUGUI RiddleTextMesh;
     public AudioClip DoorOpenClip;
     public AudioClip CoffinMoveClip;
     public AudioClip CartoonClip;
     public List<AudioClip> IntroClips;
     public List<AudioClip> RiddleClips;
-    public List<string> IntroTexts;
-    public List<string> RiddleTexts;
     public UnityEvent OnAnswerCorrect;
     public UnityEvent OnAnswerWrong;
+    public List<GameObject> riddleScreens;
     public List<GameObject> winScreens;
     public List<GameObject> loseScreens;
 
@@ -113,13 +111,12 @@ public class CoffinAnim : NetworkBehaviour
         audioSource.Stop();
         var introclip = IntroClips[Mathf.Abs(MQTTProcessor.Instance.Riddle) % IntroClips.Count];
         audioSource.PlayOneShot(introclip);
-        RiddleTextMesh.text = IntroTexts[Mathf.Abs(MQTTProcessor.Instance.Riddle) % IntroTexts.Count];
         yield return new WaitForSeconds(introclip.length);
 
         // 3. Talk Riddle
         audioSource.clip = RiddleClips[Mathf.Abs(MQTTProcessor.Instance.Riddle) % RiddleClips.Count];
         audioSource.Play();
-        RiddleTextMesh.text = RiddleTexts[Mathf.Abs(MQTTProcessor.Instance.Riddle) % RiddleTexts.Count];
+        riddleScreens[Mathf.Abs(MQTTProcessor.Instance.Riddle) % riddleScreens.Count].SetActive(true);
         new WaitForSeconds(audioSource.clip.length);
 
         if (Object.HasInputAuthority)
