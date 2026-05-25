@@ -1,6 +1,7 @@
 using UnityEngine;
+using Fusion;
 
-public class MovingPillar : MonoBehaviour
+public class MovingPillar : NetworkBehaviour
 {
    [Header("Movement Status")]
     // This lets all players in the multiplayer session know the table is done
@@ -25,7 +26,7 @@ public class MovingPillar : MonoBehaviour
     // This OnTriggerEnter goes on the Table itself, checking if it hits that EndPosition zone.
     private void OnTriggerEnter(Collider other)
     {
-        if (!Object.HasStateAuthority) return;
+        if (!HasStateAuthority) return;
 
         if (other.CompareTag("EndPosition"))
         {
@@ -36,7 +37,7 @@ public class MovingPillar : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!Object.HasStateAuthority) return;
+        if (!HasStateAuthority) return;
 
         if (other.CompareTag("EndPosition"))
         {

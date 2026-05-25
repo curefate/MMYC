@@ -92,12 +92,12 @@ public class MQTTProcessor : M2MqttUnityClient
             Debug.LogWarning("Cannot publish MQTT message: client is not connected.");
         }
         // Add this method inside MQTTProcessor.cs under your other helpers
-public void PublishStoryLanguage(string language)
+    }
+      public void PublishStoryLanguage(string language)
 {
     // E.g., language = "en" or "sv"
     PublishMessage(mqttTopicPrefix + "story_language", language);
 }
-    }
 
     //Fer´s helpers
     public void TurnOnRedLED()

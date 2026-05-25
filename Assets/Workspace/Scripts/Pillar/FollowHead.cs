@@ -16,7 +16,7 @@ public class FollowHead : NetworkBehaviour
 
     [Header("Table Reference")]
     // Drag your Table GameObject (with the MovingTable script) into this slot
-    public MovingTable physicalTable; 
+    public MovingPillar physicalTable; 
 
     [Networked] private NetworkBool StoryStarted { get; set; }
 

@@ -314,6 +314,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 1091604159545069588}
   - {fileID: 8651664094840884349}
+  - {fileID: 207724702592324899}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &1091604159545069588
 MonoBehaviour:
@@ -354,6 +355,7 @@ MonoBehaviour:
   storyAudio: {fileID: 0}
   englishStory: {fileID: 0}
   swedishStory: {fileID: 0}
+  physicalTable: {fileID: 0}
 --- !u!114 &207724702592324899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +368,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67367c18310db5947b8ecb3652dfe77e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPillar
+  _HasReachedEnd:
+    _value: 0
 --- !u!65 &6784611134543051073
 BoxCollider:
   m_ObjectHideFlags: 0
