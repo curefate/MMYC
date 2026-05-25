@@ -126,15 +126,18 @@ public class MQTTProcessor : M2MqttUnityClient
         PublishMessage("MMYC/led_2", "0");
     }
     // Jaz helper 
-    public void TurnOnEN(){
-        Debug.Log("TurnonEN");
-        PublishMessage("MMYC/story_language", "en");
-    }
-    public void TurnOnSV()
-    {
-        Debug.Log("TurnOnSV");
-        PublishMessage("MMYC/story_language", "sv");
-    }
-    
+  public void TurnOnEN()
+{
+    StoryLanguage = "en";
+    Debug.Log("StoryLanguage locally set to EN");
+    PublishMessage("MMYC/story_language", "en");
+}
+
+public void TurnOnSV()
+{
+    StoryLanguage = "sv";
+    Debug.Log("StoryLanguage locally set to SV");
+    PublishMessage("MMYC/story_language", "sv");
+}
 
 }

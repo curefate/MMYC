@@ -210,9 +210,7 @@ GameObject:
   - component: {fileID: 201928522946003059}
   - component: {fileID: 3039747433371125907}
   - component: {fileID: 2125154608543760351}
-  - component: {fileID: 1091604159545069588}
   - component: {fileID: 8651664094840884349}
-  - component: {fileID: 207724702592324899}
   - component: {fileID: 6784611134543051073}
   - component: {fileID: 1478778052073145375}
   m_Layer: 0
@@ -312,27 +310,8 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 1091604159545069588}
   - {fileID: 8651664094840884349}
-  - {fileID: 207724702592324899}
   ForceRemoteRenderTimeframe: 0
---- !u!114 &1091604159545069588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5157885250468515045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
-  _stateAuthorityChangeErrorCorrectionDelta: 0
-  SyncScale: 0
-  SyncParent: 0
-  _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 1
 --- !u!114 &8651664094840884349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,20 +335,6 @@ MonoBehaviour:
   englishStory: {fileID: 0}
   swedishStory: {fileID: 0}
   physicalTable: {fileID: 0}
---- !u!114 &207724702592324899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5157885250468515045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67367c18310db5947b8ecb3652dfe77e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MovingPillar
-  _HasReachedEnd:
-    _value: 0
 --- !u!65 &6784611134543051073
 BoxCollider:
   m_ObjectHideFlags: 0

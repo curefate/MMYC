@@ -335,7 +335,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6085636848705414269}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MQTTProcessor, Assembly-CSharp
         m_MethodName: TurnOffAllLEDs
         m_Mode: 1
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6085636848705414269}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MQTTProcessor, Assembly-CSharp
         m_MethodName: TurnOnGreenLED
         m_Mode: 1
@@ -492,7 +492,6 @@ GameObject:
   - component: {fileID: 3413266875914667353}
   - component: {fileID: 2172951292327676425}
   - component: {fileID: 6343374790686805270}
-  - component: {fileID: 6085636848705414269}
   m_Layer: 5
   m_Name: MQTTCanvas
   m_TagString: Untagged
@@ -587,26 +586,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6085636848705414269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4495402547258971090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e592f66053cf144c8b765c0b8f7204c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MQTTProcessor
-  brokerAddress: inf-liva-server-eth.dsv.local.su.se
-  brokerPort: 1883
-  isEncrypted: 0
-  connectionDelay: 500
-  timeoutOnConnection: 30000
-  autoConnect: 1
-  mqttUserName: unity
-  mqttPassword: extrality
 --- !u!1 &4518124013728159153
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,7 +844,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6085636848705414269}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MQTTProcessor, Assembly-CSharp
         m_MethodName: TurnOnBlueLED
         m_Mode: 1
@@ -998,7 +977,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6085636848705414269}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MQTTProcessor, Assembly-CSharp
         m_MethodName: TurnOnRedLED
         m_Mode: 1

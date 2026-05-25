@@ -14,10 +14,6 @@ public class FollowHead : NetworkBehaviour
     public AudioClip englishStory;
     public AudioClip swedishStory;
 
-    [Header("Table Reference")]
-    // Drag your Table GameObject (with the MovingTable script) into this slot
-    public MovingPillar physicalTable; 
-
     [Networked] private NetworkBool StoryStarted { get; set; }
 
     public override void FixedUpdateNetwork()
@@ -36,29 +32,17 @@ public class FollowHead : NetworkBehaviour
         if (!Object.HasStateAuthority) return;
 
         RPC_OnBackToPosition();
-        CheckAndPlayStory();
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (!Object.HasStateAuthority) return;
-
-        // Continuously checks while player is inside their designated area
-        CheckAndPlayStory();
-    }
-
-    private void CheckAndPlayStory()
-    {
-        if (StoryStarted) return;
-
-        // The player script simply asks the table: "Are you at the end yet?"
-        if (physicalTable != null && physicalTable.HasReachedEnd)
+        if (!StoryStarted)
         {
             StoryStarted = true;
 
             string language = "en";
+
             if (MQTTProcessor.Instance != null)
                 language = MQTTProcessor.Instance.StoryLanguage;
+                
+                  Debug.Log("StateAuthority selected story language: " + language);
 
             RPC_PlayStoryAudio(language);
         }
@@ -71,21 +55,41 @@ public class FollowHead : NetworkBehaviour
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_OnBackToPosition() => OnBackToPosition?.Invoke();
-
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_OnLeavePosition() => OnLeavePosition?.Invoke();
-
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_PlayStoryAudio(string language)
+    private void RPC_OnBackToPosition()
     {
-        if (storyAudio == null) return;
-
-        if (language == "sv" || language == "swedish")
-            storyAudio.clip = swedishStory;
-        else
-            storyAudio.clip = englishStory;
-
-        storyAudio.Play();
+        OnBackToPosition?.Invoke();
     }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_OnLeavePosition()
+    {
+        OnLeavePosition?.Invoke();
+    }
+
+  [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+private void RPC_PlayStoryAudio(string language)
+{
+    Debug.Log("RPC_PlayStoryAudio received language: " + language);
+
+    if (storyAudio == null)
+    {
+        Debug.LogError("Story AudioSource is missing!");
+        return;
+    }
+
+    if (language == "sv" || language == "swedish")
+        storyAudio.clip = swedishStory;
+    else
+        storyAudio.clip = englishStory;
+
+    if (storyAudio.clip == null)
+    {
+        Debug.LogError("Selected story audio clip is missing!");
+        return;
+    }
+
+    storyAudio.Play();
+
+    Debug.Log("Playing audio clip: " + storyAudio.clip.name);
+}
 }
