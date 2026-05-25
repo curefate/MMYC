@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Fusion;
 using TMPro;
 using UnityEngine;
@@ -22,9 +23,13 @@ public class CoffinAnim : NetworkBehaviour
     public List<string> RiddleTexts;
     public UnityEvent OnAnswerCorrect;
     public UnityEvent OnAnswerWrong;
+    public List<GameObject> winScreens;
+    public List<GameObject> loseScreens;
 
     [Networked]
     private bool IfAnimDone { get; set; }
+    [Networked]
+    private bool IfRiddleSolved { get; set; }
 
     private readonly float coffin_move_angle = 30f;
     private readonly Vector3 mummy_target_size = Vector3.one;
@@ -46,14 +51,9 @@ public class CoffinAnim : NetworkBehaviour
 
         if (answer == ScaleDef.WeightType.None) return;
 
-        if (answer == riddle_answer)
-        {
-            OnAnswerCorrect.Invoke();
-        }
-        else
-        {
-            OnAnswerWrong.Invoke();
-        }
+        if (IfRiddleSolved) return;
+
+        Rpc_ReceiveAnswer(answer == riddle_answer);
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
@@ -125,6 +125,23 @@ public class CoffinAnim : NetworkBehaviour
         if (Object.HasInputAuthority)
         {
             IfAnimDone = true;
+        }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void Rpc_ReceiveAnswer(bool isCorrect)
+    {
+        IfRiddleSolved = true;
+        audioSource.Stop();
+        if (isCorrect)
+        {
+            OnAnswerCorrect.Invoke();
+            winScreens[MQTTProcessor.Instance.Riddle].SetActive(true);
+        }
+        else
+        {
+            OnAnswerWrong.Invoke();
+            loseScreens[MQTTProcessor.Instance.Riddle].SetActive(true);
         }
     }
 }
