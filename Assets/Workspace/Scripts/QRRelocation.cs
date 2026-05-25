@@ -33,10 +33,13 @@ public class QRRelocation : NetworkBehaviour
         }
 
         target = trackable.transform;
+        var targetRotationOnY = Quaternion.Euler(0, target.rotation.eulerAngles.y, 0);
 
-        Rpc_AlignRoot(target.position, target.rotation);
+        Rpc_AlignRoot(target.position, targetRotationOnY);
 
         isDone = true;
+
+        Rpc_Stop();
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
@@ -44,5 +47,12 @@ public class QRRelocation : NetworkBehaviour
     {
         root.position = position;
         root.rotation = rotation;
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void Rpc_Stop()
+    {
+        MRUK.Instance.SceneSettings.TrackableAdded.RemoveListener(OnTrackableAdded);
+        this.GetComponent<QRCabliration>().enabled = false;
     }
 }
