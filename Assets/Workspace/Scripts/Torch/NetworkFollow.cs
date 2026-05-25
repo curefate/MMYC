@@ -5,6 +5,7 @@ public class NetworkFollow : NetworkBehaviour
 {
     public Transform target;
     public Vector3 offset;
+    public bool absoluteOffset;
     public bool followRotation;
 
     public override void FixedUpdateNetwork()
@@ -13,7 +14,15 @@ public class NetworkFollow : NetworkBehaviour
 
         if (target != null)
         {
-            transform.position = target.position + offset;
+            if (absoluteOffset)
+            {
+                transform.position = target.position + offset;
+            }
+            else
+            {
+                transform.position = target.position + target.forward * offset.z + target.right * offset.x + target.up * offset.y;
+            }
+
             if (followRotation)
             {
                 transform.rotation = target.rotation;
