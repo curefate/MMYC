@@ -877,7 +877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2140320881376128087, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.46655217
+      value: 0.4665521
       objectReference: {fileID: 0}
     - target: {fileID: 2140320881376128087, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -901,7 +901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2567456879040517843, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.235
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 2567456879040517843, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -909,7 +909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2567456879040517843, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5
+      value: 0.84
       objectReference: {fileID: 0}
     - target: {fileID: 2567456879040517843, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -945,7 +945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6871022489954638732, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.46639487
+      value: -0.46639496
       objectReference: {fileID: 0}
     - target: {fileID: 6871022489954638732, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -953,7 +953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6871022489954638732, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00021303692
+      value: -0.0002129376
       objectReference: {fileID: 0}
     - target: {fileID: 8184066053279894459, guid: 2215e93065ba47f49bab477be26c023f, type: 3}
       propertyPath: OnEqual.m_PersistentCalls.m_Calls.Array.size
@@ -1402,7 +1402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2717287069818479255, guid: 6a436236ca258e941ae57f7843d5c5d8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.249
+      value: 2.86
       objectReference: {fileID: 0}
     - target: {fileID: 2717287069818479255, guid: 6a436236ca258e941ae57f7843d5c5d8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3511,7 +3511,7 @@ PrefabInstance:
     - target: {fileID: 8651664094840884349, guid: 54a6a33712b376741b33b049dbe3c8dc, type: 3}
       propertyPath: storyAudio
       value: 
-      objectReference: {fileID: 1391266295}
+      objectReference: {fileID: 1391266297}
     - target: {fileID: 8651664094840884349, guid: 54a6a33712b376741b33b049dbe3c8dc, type: 3}
       propertyPath: englishStory
       value: 
@@ -3770,11 +3770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!82 &1391266295 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1478778052073145375, guid: 54a6a33712b376741b33b049dbe3c8dc, type: 3}
-  m_PrefabInstance: {fileID: 1391266293}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1391266296 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8651664094840884349, guid: 54a6a33712b376741b33b049dbe3c8dc, type: 3}
@@ -3786,6 +3781,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530258433fa346f49a5e8656646b25a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FollowHead
+--- !u!82 &1391266297 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1478778052073145375, guid: 54a6a33712b376741b33b049dbe3c8dc, type: 3}
+  m_PrefabInstance: {fileID: 1391266293}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1404282406 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6573881568000983446, guid: e946a723b8a960541881cee98d17376b, type: 3}
