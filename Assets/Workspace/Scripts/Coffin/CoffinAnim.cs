@@ -114,6 +114,7 @@ public class CoffinAnim : NetworkBehaviour
         yield return new WaitForSeconds(introclip.length);
 
         // 3. Talk Riddle
+        audioSource.bypassEffects = false;
         audioSource.clip = RiddleClips[Mathf.Abs(MQTTProcessor.Instance.Riddle) % RiddleClips.Count];
         audioSource.Play();
         riddleScreens[Mathf.Abs(MQTTProcessor.Instance.Riddle) % riddleScreens.Count].SetActive(true);

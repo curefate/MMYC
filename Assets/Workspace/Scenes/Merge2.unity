@@ -988,7 +988,7 @@ AudioSource:
   m_GameObject: {fileID: 278944543}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4979613822863818542, guid: b583420bf70ba014bbe74d70d8131287, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 602530b13461bca45b84ac08936cfa42, type: 3}
   m_PlayOnAwake: 1
@@ -1629,6 +1629,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1224739597}
     m_Modifications:
+    - target: {fileID: 1936221285402608798, guid: 6a436236ca258e941ae57f7843d5c5d8, type: 3}
+      propertyPath: BypassEffects
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936221285402608798, guid: 6a436236ca258e941ae57f7843d5c5d8, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -8515308591831493256, guid: b583420bf70ba014bbe74d70d8131287, type: 2}
     - target: {fileID: 1936221285402608798, guid: 6a436236ca258e941ae57f7843d5c5d8, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 0
@@ -4847,7 +4855,7 @@ AudioSource:
   m_GameObject: {fileID: 1391266295}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8515308591831493256, guid: b583420bf70ba014bbe74d70d8131287, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -6279,11 +6287,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4461710814528703929, guid: 4fea714845c3e1c47b335ad5cbaaa605, type: 3}
       propertyPath: m_text
-      value: 7
+      value: 2+3
       objectReference: {fileID: 0}
     - target: {fileID: 4463163986358316879, guid: 4fea714845c3e1c47b335ad5cbaaa605, type: 3}
       propertyPath: m_text
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4572096287289541075, guid: 4fea714845c3e1c47b335ad5cbaaa605, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6295,7 +6303,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4580063336476544274, guid: 4fea714845c3e1c47b335ad5cbaaa605, type: 3}
       propertyPath: m_text
-      value: 6
+      value: 9-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580063336476544274, guid: 4fea714845c3e1c47b335ad5cbaaa605, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 4635012143250240007, guid: 4fea714845c3e1c47b335ad5cbaaa605, type: 3}
       propertyPath: SortKey
