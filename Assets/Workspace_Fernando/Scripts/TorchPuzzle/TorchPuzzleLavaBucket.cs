@@ -43,6 +43,24 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
                 Runner.Despawn(rightFlame);
             }
         }
+
+        if (leftFlame && leftHand.position.y <= 0.1f)
+        {
+            RPC_SetActive(leftFlame, false);
+        }
+        else
+        {
+            RPC_SetActive(leftFlame, true);
+        }
+
+        if (rightFlame && rightHand.position.y <= 0.1f)
+        {
+            RPC_SetActive(rightFlame, false);
+        }
+        else
+        {
+            RPC_SetActive(rightFlame, true);
+        }
     }
 
     public void TouchLava()
