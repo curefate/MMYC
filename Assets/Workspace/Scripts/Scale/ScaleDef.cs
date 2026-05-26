@@ -21,23 +21,30 @@ public static class ScaleDef
         { WeightType.Eye, 1.5f }
     };
 
+    public static Dictionary<WeightType, int> WeightSerialCentralDict = new()
+    {
+        { WeightType.Skull, 1200 },
+        { WeightType.Cat, -1300 },
+        { WeightType.Pyramid, 2500 },
+        { WeightType.Eye, -2150 },
+        { WeightType.None, 0 }
+    };
+
+    public static int SerialRangeExpand = 550;
     public static float LeftDefaultWeight = 1f;
     public static float RightDefaultWeight = 5f;
 
     public static WeightType GetWeightTypeBySerial(int num)
     {
-        if (num > 2400 && num <= 2900)
-            return WeightType.Eye;
-        else if (num > 3300 && num <= 3900)
-            return WeightType.Cat;
-        else if (num > 4900 && num <= 5500)
-            return WeightType.None;
-        else if (num > 6100 && num <= 6900)
-            return WeightType.Skull;
-        else if (num > 7400 && num <= 8300)
-            return WeightType.Pyramid;
-        else
-            return WeightType.None;
+        var baseLine = MQTTProcessor.Instance.Hall_base;
+        foreach (var kvp in WeightSerialCentralDict)
+        {
+            if (math.abs(num - baseLine - kvp.Value) <= SerialRangeExpand)
+            {
+                return kvp.Key;
+            }
+        }
+        return WeightType.None;
     }
 
     public static float GetWeightBySerial(int num)

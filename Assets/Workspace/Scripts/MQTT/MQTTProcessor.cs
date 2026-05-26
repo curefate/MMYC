@@ -6,6 +6,7 @@ using System;
 
 public class MQTTProcessor : M2MqttUnityClient
 {
+    public int Hall_base { get; private set; }
     public int Hall_0 { get; private set; }
     public int Hall_1 { get; private set; }
     public int Hall_2 { get; private set; }
@@ -24,6 +25,7 @@ public class MQTTProcessor : M2MqttUnityClient
     // 6: CoffinAnim manually
     // 7: Answer correct
     // 8: Answer wrong
+    // 9: Calibration hall base
     public int CheatCode { get; private set; }
 
     public static MQTTProcessor Instance { get; private set; } = null;
@@ -46,6 +48,7 @@ public class MQTTProcessor : M2MqttUnityClient
 
         topicToProcessor = new Dictionary<string, Action<string>>
         {
+            { mqttTopicPrefix + "hall_base", value => Hall_base = int.TryParse(value, out var hallBase) ? hallBase : Hall_base },
             { mqttTopicPrefix + "hall_0", value => Hall_0 = int.TryParse(value, out var hall0) ? hall0 : Hall_0 },
             { mqttTopicPrefix + "hall_1", value => Hall_1 = int.TryParse(value, out var hall1) ? hall1 : Hall_1 },
             { mqttTopicPrefix + "hall_2", value => Hall_2 = int.TryParse(value, out var hall2) ? hall2 : Hall_2 },

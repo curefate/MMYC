@@ -1,3 +1,4 @@
+using System.Collections;
 using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,10 +17,29 @@ public class BeamRotator : NetworkBehaviour
     private float anglePerWeight => MaxAngle / MaxWeightDifference;
     private float currentWeightDifference;
 
+    private Coroutine calibrationCoroutine;
+
+    public override void Spawned()
+    {
+        if (Object.HasStateAuthority)
+        {
+            calibrationCoroutine = StartCoroutine(Routine_Calibration());
+        }
+    }
+
     public override void FixedUpdateNetwork()
     {
         if (!Object.HasStateAuthority)
             return;
+
+        if (MQTTProcessor.Instance.CheatCode == 9)
+        {
+            if (calibrationCoroutine != null)
+            {
+                StopCoroutine(calibrationCoroutine);
+            }
+            calibrationCoroutine = StartCoroutine(Routine_Calibration());
+        }
 
         UpdateAngle();
     }
@@ -61,5 +81,14 @@ public class BeamRotator : NetworkBehaviour
     private void RPC_OnEqual()
     {
         OnEqual.Invoke();
+    }
+
+    private IEnumerator Routine_Calibration()
+    {
+        yield return new WaitForSeconds(3f);
+        var hall4 = MQTTProcessor.Instance.Hall_4;
+        var baseLine = (MQTTProcessor.Instance.Hall_0 + MQTTProcessor.Instance.Hall_1 + MQTTProcessor.Instance.Hall_2 + MQTTProcessor.Instance.Hall_3 + hall4) / (4f + (hall4 == 0 ? 0f : 1f));
+        MQTTProcessor.Instance.PublishMessage("MMYC/hall_base", Mathf.RoundToInt(baseLine).ToString());
+        yield return null;
     }
 }
