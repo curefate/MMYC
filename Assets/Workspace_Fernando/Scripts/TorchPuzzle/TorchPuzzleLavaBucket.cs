@@ -114,13 +114,13 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
         RPC_SetActive(leftFlame, true);
         //RPC_ReleaseAuthority(leftFlame);
         leftFlame.RequestStateAuthority();
-        leftFlame.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+        //leftFlame.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
 
         rightFlame = flame_right.GetComponent<NetworkObject>();
         RPC_SetActive(rightFlame, true);
         //RPC_ReleaseAuthority(rightFlame);
         rightFlame.RequestStateAuthority();
-        rightFlame.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+        //rightFlame.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
