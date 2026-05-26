@@ -15,8 +15,8 @@ public static class ScaleDef
     public static Dictionary<WeightType, float> WeightDict = new()
     {
         { WeightType.None, 0f },
-        { WeightType.Skull, 3.5f },
-        { WeightType.Cat, 2.5f },
+        { WeightType.Skull, 3.6f },
+        { WeightType.Cat, 2.6f },
         { WeightType.Pyramid, 4.5f },
         { WeightType.Eye, 1.5f }
     };
