@@ -26,7 +26,7 @@ public static class ScaleDef
 
     public static WeightType GetWeightTypeBySerial(int num)
     {
-        if (num > 2400 && num <= 2600)
+        if (num > 2400 && num <= 2900)
             return WeightType.Eye;
         else if (num > 3300 && num <= 3900)
             return WeightType.Cat;
