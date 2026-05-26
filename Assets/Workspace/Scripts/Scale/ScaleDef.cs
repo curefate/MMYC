@@ -32,9 +32,9 @@ public static class ScaleDef
             return WeightType.Cat;
         else if (num > 4900 && num <= 5500)
             return WeightType.None;
-        else if (num > 6300 && num <= 6900)
+        else if (num > 6100 && num <= 6900)
             return WeightType.Skull;
-        else if (num > 7800 && num <= 8300)
+        else if (num > 7400 && num <= 8300)
             return WeightType.Pyramid;
         else
             return WeightType.None;
