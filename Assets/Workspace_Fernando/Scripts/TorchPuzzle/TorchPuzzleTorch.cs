@@ -31,6 +31,14 @@ public class TorchPuzzleTorch : NetworkBehaviour
         }
     }
 
+    public override void FixedUpdateNetwork()
+    {
+        if (MQTTProcessor.Instance.CheatCode == 2 + requiredColorIndex)
+        {
+            RPC_ActivateTorch();
+        }
+    }
+
     public void TouchTorch()
     {
         if (Object == null || !Object.IsValid)

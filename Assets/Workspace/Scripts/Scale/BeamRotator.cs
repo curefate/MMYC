@@ -43,13 +43,23 @@ public class BeamRotator : NetworkBehaviour
         float weight_r = r0 + r1 + ScaleDef.RightDefaultWeight;
 
         float diff = weight_l - weight_r;
+        if (MQTTProcessor.Instance.CheatCode == 5)
+        {
+            diff = 0;
+        }
         if (diff == 0 && currentWeightDifference != 0)
         {
-            OnEqual.Invoke();
+            RPC_OnEqual();
         }
         currentWeightDifference = diff;
 
         Angle = Mathf.Clamp(currentWeightDifference * anglePerWeight, -MaxAngle, MaxAngle);
         Debug.Log($"Left: {weight_l}, Right: {weight_r}, Angle: {Angle}");
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_OnEqual()
+    {
+        OnEqual.Invoke();
     }
 }

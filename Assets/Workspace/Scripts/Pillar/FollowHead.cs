@@ -15,7 +15,7 @@ public class FollowHead : NetworkBehaviour
 
     public override void Spawned()
     {
-        OnActivate.AddListener(() => GetComponent<AudioSource>().PlayOneShot(audioClips[MQTTProcessor.Instance.Riddle]));
+        OnActivate.AddListener(() => GetComponent<AudioSource>().PlayOneShot(audioClips[MQTTProcessor.Instance.Language]));
     }
 
     public override void FixedUpdateNetwork()
@@ -28,6 +28,9 @@ public class FollowHead : NetworkBehaviour
         var yPlanePos = new Vector3(activatePos.position.x, 0, activatePos.position.z);
         var distanceOnYPlane = Vector3.Distance(yPlanePos, new Vector3(transform.position.x, 0, transform.position.z));
         Debug.LogError($"Distance on Y Plane: {distanceOnYPlane}");
+
+        if (isActivated) return;
+
         if (distanceOnYPlane < 0.15f)
         {
             _atPosition = true;
@@ -41,10 +44,16 @@ public class FollowHead : NetworkBehaviour
         if (_atPosition)
         {
             _timer += Runner.DeltaTime;
-            if (_timer > 1.5f && !isActivated)
+            if (_timer > 1.5f)
             {
                 Rpc_Activate();
             }
+        }
+
+        // Cheat
+        if (MQTTProcessor.Instance.CheatCode == 1)
+        {
+            Rpc_Activate();
         }
     }
 

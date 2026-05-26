@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Fusion;
 using TMPro;
 using UnityEngine;
@@ -30,7 +29,7 @@ public class CoffinAnim : NetworkBehaviour
     private bool IfRiddleSolved { get; set; }
 
     private readonly float coffin_move_angle = 30f;
-    private readonly Vector3 mummy_target_size = Vector3.one;
+    private readonly Vector3 mummy_target_size = new Vector3(0.75f, 0.75f, 0.75f);
     private readonly ScaleDef.WeightType riddle_answer = ScaleDef.WeightType.Skull;
 
     private AudioSource audioSource;
@@ -43,7 +42,23 @@ public class CoffinAnim : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!Object.HasStateAuthority || !IfAnimDone) return;
+        if (!Object.HasStateAuthority) return;
+
+        if (MQTTProcessor.Instance.CheatCode == 6 && !IfAnimDone)
+        {
+            Rpc_PlayCoffinAnimation();
+        }
+
+        if (!IfAnimDone) return;
+
+        if (MQTTProcessor.Instance.CheatCode == 7)
+        {
+            Rpc_ReceiveAnswer(true);
+        }
+        else if (MQTTProcessor.Instance.CheatCode == 8)
+        {
+            Rpc_ReceiveAnswer(false);
+        }
 
         var answer = ScaleDef.GetWeightTypeBySerial(MQTTProcessor.Instance.Hall_4);
 
@@ -51,7 +66,8 @@ public class CoffinAnim : NetworkBehaviour
 
         if (IfRiddleSolved) return;
 
-        Rpc_ReceiveAnswer(answer == riddle_answer);
+        var isCorrect = answer == riddle_answer;
+        Rpc_ReceiveAnswer(isCorrect);
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
@@ -59,7 +75,7 @@ public class CoffinAnim : NetworkBehaviour
     {
         if (currentCoroutine != null)
         {
-            StopCoroutine(currentCoroutine);
+            return;
         }
         currentCoroutine = StartCoroutine(CoffinAnimation());
     }
@@ -74,8 +90,8 @@ public class CoffinAnim : NetworkBehaviour
         var doorScale = Door.localScale;
         while (elapsedTime < audioSource.clip.length)
         {
-            Door.position = doorPos - new Vector3(0, Mathf.Lerp(0, 2, elapsedTime / audioSource.clip.length), 0);
-            Door.localScale = new Vector3(doorScale.x, Mathf.Lerp(1, 0.5f, elapsedTime / audioSource.clip.length), doorScale.z);
+            Door.position = doorPos - new Vector3(0, Mathf.Lerp(0, 2.5f, elapsedTime / audioSource.clip.length), 0);
+            Door.localScale = new Vector3(doorScale.x, Mathf.Lerp(1, 0.8f, elapsedTime / audioSource.clip.length), doorScale.z);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -109,18 +125,17 @@ public class CoffinAnim : NetworkBehaviour
         }
         Mummy.localScale = mummy_target_size;
         audioSource.Stop();
-        var introclip = IntroClips[Mathf.Abs(MQTTProcessor.Instance.Riddle) % IntroClips.Count];
+        var introclip = IntroClips[Mathf.Abs(MQTTProcessor.Instance.Language) % IntroClips.Count];
         audioSource.PlayOneShot(introclip);
         yield return new WaitForSeconds(introclip.length);
 
         // 3. Talk Riddle
         audioSource.bypassEffects = false;
-        audioSource.clip = RiddleClips[Mathf.Abs(MQTTProcessor.Instance.Riddle) % RiddleClips.Count];
+        audioSource.clip = RiddleClips[Mathf.Abs(MQTTProcessor.Instance.Language) % RiddleClips.Count];
         audioSource.Play();
-        riddleScreens[Mathf.Abs(MQTTProcessor.Instance.Riddle) % riddleScreens.Count].SetActive(true);
-        new WaitForSeconds(audioSource.clip.length);
+        riddleScreens[Mathf.Abs(MQTTProcessor.Instance.Language) % riddleScreens.Count].SetActive(true);
 
-        if (Object.HasInputAuthority)
+        if (Object.HasStateAuthority)
         {
             IfAnimDone = true;
         }
@@ -134,12 +149,12 @@ public class CoffinAnim : NetworkBehaviour
         if (isCorrect)
         {
             OnAnswerCorrect.Invoke();
-            winScreens[MQTTProcessor.Instance.Riddle].SetActive(true);
+            winScreens[MQTTProcessor.Instance.Language].SetActive(true);
         }
         else
         {
             OnAnswerWrong.Invoke();
-            loseScreens[MQTTProcessor.Instance.Riddle].SetActive(true);
+            loseScreens[MQTTProcessor.Instance.Language].SetActive(true);
         }
     }
 }

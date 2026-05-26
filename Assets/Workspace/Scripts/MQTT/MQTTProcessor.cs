@@ -14,7 +14,17 @@ public class MQTTProcessor : M2MqttUnityClient
     public int Led_0 { get; private set; }
     public int Led_1 { get; private set; }
     public int Led_2 { get; private set; }
-    public int Riddle { get; private set; }
+    public int Language { get; private set; }
+
+    // 1: Activate pillar
+    // 2: Light up red torch
+    // 3: Light up green torch
+    // 4: Light up blue torch
+    // 5: Force scale equal
+    // 6: CoffinAnim manually
+    // 7: Answer correct
+    // 8: Answer wrong
+    public int CheatCode { get; private set; }
 
     public static MQTTProcessor Instance { get; private set; } = null;
 
@@ -44,7 +54,8 @@ public class MQTTProcessor : M2MqttUnityClient
             { mqttTopicPrefix + "led_0", value => Led_0 = int.TryParse(value, out var led0) ? led0 : Led_0 },
             { mqttTopicPrefix + "led_1", value => Led_1 = int.TryParse(value, out var led1) ? led1 : Led_1 },
             { mqttTopicPrefix + "led_2", value => Led_2 = int.TryParse(value, out var led2) ? led2 : Led_2 },
-            { mqttTopicPrefix + "riddle", value => Riddle = int.TryParse(value, out var riddle) ? riddle : Riddle },
+            { mqttTopicPrefix + "language", value => Language = int.TryParse(value, out var language) ? language : Language },
+            { mqttTopicPrefix + "cheat_code", value => CheatCode = int.TryParse(value, out var cheatCode) ? cheatCode : CheatCode },
         };
     }
 
