@@ -94,11 +94,13 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
 
         leftFlame = flame_left.GetComponent<NetworkObject>();
         RPC_SetActive(leftFlame, true);
+        //RPC_ReleaseAuthority(leftFlame);
         leftFlame.RequestStateAuthority();
         leftFlame.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
 
         rightFlame = flame_right.GetComponent<NetworkObject>();
         RPC_SetActive(rightFlame, true);
+        //RPC_ReleaseAuthority(rightFlame);
         rightFlame.RequestStateAuthority();
         rightFlame.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
     }
@@ -113,5 +115,11 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
     void RPC_PlayLavaSound()
     {
         audioSource.PlayOneShot(lavaSound);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    void RPC_ReleaseAuthority(NetworkObject obj)
+    {
+        obj.ReleaseStateAuthority();
     }
 }
