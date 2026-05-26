@@ -1630,6 +1630,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 429177738}
     - target: {fileID: 8551917545705645157, guid: 6a436236ca258e941ae57f7843d5c5d8, type: 3}
+      propertyPath: riddleScreens.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551917545705645157, guid: 6a436236ca258e941ae57f7843d5c5d8, type: 3}
       propertyPath: OnAnswerCorrect.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

@@ -130,6 +130,8 @@ public class CoffinAnim : NetworkBehaviour
         int riddleIndex = Mathf.Abs(MQTTProcessor.Instance.Riddle) % IntroClips.Count;
 
         AudioClip introClip = IntroClips[riddleIndex];
+        Debug.Log("Playing intro clip: " + introClip.name);
+        Debug.Log("Story audio source is: " + storyAudioSource.name);
         storyAudioSource.PlayOneShot(introClip);
 
         yield return new WaitForSeconds(introClip.length);
