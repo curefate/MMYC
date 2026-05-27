@@ -29,7 +29,7 @@ public class CoffinAnim : NetworkBehaviour
     private bool IfRiddleSolved { get; set; }
 
     private readonly float coffin_move_angle = 30f;
-    private readonly Vector3 mummy_target_size = new Vector3(0.5f, 0.5f, 0.5f);
+    private readonly Vector3 mummy_target_size = new Vector3(0.65f, 0.65f, 0.65f);
     private readonly ScaleDef.WeightType riddle_answer = ScaleDef.WeightType.Skull;
 
     private AudioSource audioSource;

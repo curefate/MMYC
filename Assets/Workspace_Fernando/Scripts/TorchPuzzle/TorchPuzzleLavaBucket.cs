@@ -33,15 +33,9 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
     {
         if (redTorch.isActivated && greenTorch.isActivated && blueTorch.isActivated)
         {
-            if (leftFlame && leftFlame.HasStateAuthority)
-            {
-                RPC_SetActive(leftFlame, false);
-            }
-
-            if (rightFlame && rightFlame.HasStateAuthority)
-            {
-                RPC_SetActive(rightFlame, false);
-            }
+            RPC_SetActive(leftFlame, false);
+            RPC_SetActive(rightFlame, false);
+            return;
         }
 
         if (leftFlame && leftHand.position.y <= 0.1f)

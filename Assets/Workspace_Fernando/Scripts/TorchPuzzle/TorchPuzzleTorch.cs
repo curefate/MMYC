@@ -31,6 +31,15 @@ public class TorchPuzzleTorch : NetworkBehaviour
         }
     }
 
+    public override void Spawned()
+    {
+        // blue default activate
+        if (requiredColorIndex == 2)
+        {
+            RPC_ActivateTorch();
+        }
+    }
+
     public override void FixedUpdateNetwork()
     {
         if (MQTTProcessor.Instance.CheatCode == 2 + requiredColorIndex)
@@ -88,6 +97,12 @@ public class TorchPuzzleTorch : NetworkBehaviour
 
     private void SpawnTorchFlame()
     {
+        // ignore blue
+        if (requiredColorIndex == 2)
+        {
+            return;
+        }
+
         if (spawnedFlame != null)
         {
             return;
