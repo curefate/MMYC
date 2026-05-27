@@ -35,12 +35,12 @@ public class TorchPuzzleLavaBucket : NetworkBehaviour
         {
             if (leftFlame && leftFlame.HasStateAuthority)
             {
-                Runner.Despawn(leftFlame);
+                RPC_SetActive(leftFlame, false);
             }
 
             if (rightFlame && rightFlame.HasStateAuthority)
             {
-                Runner.Despawn(rightFlame);
+                RPC_SetActive(rightFlame, false);
             }
         }
 
