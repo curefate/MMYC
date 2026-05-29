@@ -1,7 +1,7 @@
 <!-- Place this file at the root of your Unity project.
 At the same level than the folders Assets/* -->
 
-# [Name of the project]
+# [Mummy's Curse]
 
 _Some examples are shown below but you should expand on each subtitle as much as needed to provide comprehensive information/ **MarkDown** reference is available here: <https://www.markdownguide.org/basic-syntax/>_
 
