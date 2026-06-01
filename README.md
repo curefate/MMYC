@@ -43,8 +43,7 @@ The current version of the game. We removed the minimap and room switch mechanis
 1. Overlay
 
     Occlusion and Passthrough are used in project to blend the virtual and physical space. Player can see virtual object and real physical object at same time in correct geometry relationship.
-
-    ![screenshot]()
+    <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/6575dfb8-e754-42d3-b640-c366a9d70797" />
 
 2. MQTT Communication
 
