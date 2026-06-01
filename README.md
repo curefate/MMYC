@@ -27,6 +27,7 @@ The game uses passthrough and occlusion to blend the virtual and real worlds, an
 3. Hall-Effect Sensor Based Props
 4. Sensor Calibration
 5. QR Code Redirect
+6. Multilingual
 
 ## Installation
 
@@ -50,6 +51,14 @@ Unity Version: **6000.3.10.f1**
 ## Usage (TODO)
 
 Some clips of game.
+
+### Puzzle 1
+
+### Puzzle 2
+
+### Puzzle 3
+
+### Puzzle 4 (Riddle)
 
 ## References
 
