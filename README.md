@@ -2,9 +2,9 @@
 
 ## Introduction
 
-**Mummys' Curse** is a mixed reality multiplay escape room experience. Players need to observe carefully, look for clues, and work together to solve a series of puzzles and riddle in order to break the mummy's curse and escape from the tomb.
+**Mummys' Curse** is a mixed reality multiplay escape room experience. Players need to observe carefully, look for clues, and work together to solve a series of puzzles and a riddle in order to break the mummy's curse and escape from the tomb.
 
-The game uses passthrough and occlusion to blend the virtual and real worlds, and utilizes a variety of physical props and sensors to enhance immersion.
+The game uses passthrough and occlusion to blend the virtual and the real world, and utilizes a variety of physical props and sensors to enhance immersion.
 
 <img width="685" height="970" alt="image" src="https://github.com/user-attachments/assets/ef4dfa7e-d328-4b71-9668-dd27558c30a6" />
 
@@ -18,49 +18,51 @@ The game uses passthrough and occlusion to blend the virtual and real worlds, an
 
 [**Design Document**](https://docs.google.com/document/d/1Ehma-Y1a294HS1l4nNsgTa0KNRkZo7E6IM7gJ1hSYZs/edit?usp=sharing)
 
-The very beginning idea of us. The idea is about assigning different roles to players while encouraging competition among them to partially replace cooperation, find the mafia hidden in the crowd or complete the conspiracy to win the game.
+The very beginning idea from our team. The concept was to assign different roles to players while encouraging competition among them to partially replace cooperation. Players would either find the mafia hidden in the crowd or complete the conspiracy to win the game.
 
-But we eventually abandoned the idea. The main reason was traditional mafia game require **at least 7 players** for a good gaming experience. In our case, the amount of HMDs and management of players can be a unignoreable problem. We tried designed a new rule based on traditional game specific for less players, but it is too complex for a 10-15 mins demonstration.
+However, we eventually abandoned the idea. The main reason was that a traditional mafia game requires **at least 7 players** to provide a good gameplay experience. In our case, the number of HMDs and the management of players could become a significant problem. We tried designing a new set of rules based on the traditional game for fewer players, but it was too complex for a 10–15 minute demonstration.
 
 ### Phase 2: Mummy's Curse 1.0
 
 [**Design Document**](https://docs.google.com/document/d/1rfbI2MNi-GRsnRO2vtrxWCsdphHY01Io0in4PouiIhg/edit?usp=sharing)
 
-The first version of our Mummy's Curse idea. The main feature is the whole game is divided into 9 different rooms, with different puzzles and riddles. We disigned 3 color-based puzzles and 3 riddles, if player give the wrong answer of the riddle, one of them will lose color, so they need to collabrate more with each other. Players can switch into different rooms through the minimap in the middle of room, specifically, when they press the button, the overlay wall and digital objects will be replaced, we want players can have the feeling of advanture like **Tomb Riders** through this.
+The first version of our Mummy's Curse concept. The main feature was that the entire game was divided into 9 different rooms, each containing different puzzles and riddles. We designed 3 color-based puzzles and 3 riddles. If players gave the wrong answer to a riddle, one of them would lose their color vision, forcing the group to collaborate more closely. Players could switch between rooms through a minimap located in the center of the room. Specifically, when a button was pressed, the virtual walls and digital objects would be replaced, giving players a sense of adventure similar to Tomb Raider.
 
-We designed weight scale puzzle, mirror reflection beam puzzle, flame hand puzzle, and three egyption style riddle in this version, which you can find in document.
+In this version, we designed a weight scale puzzle, a mirror reflection beam puzzle, a flame hand puzzle, and three Egyptian-style riddles, which can be found in the design document.
 
-While after supervision, we decided to redesign this version, because for a mixed-reality experience, there are too less tangible interaction, basically we can did the same thing in only VR. (Although we still think it is good!)
+However, after supervision, we decided to redesign this version because, for a mixed reality experience, it contained too few tangible interactions. Essentially, most of the experience could have been achieved in a traditional VR environment. (Although we still believe it was a good concept!)
 
 ### Phase 3: Mummy's Curse 2.0
 
 [**Design Document**](https://docs.google.com/document/d/1rfbI2MNi-GRsnRO2vtrxWCsdphHY01Io0in4PouiIhg/edit?usp=sharing)
 
-The current version of the game. We removed the minimap and room switch mechanism because it actually limit us to have tangible, physicial object in the game space. The weight scale and flame hand puzzles are inherited into this version, and be modified to be more tangible, for example, the weight of scale become physical props. The whole experience right now is more like an escape room experience, which players need to observe the whole room carefully, solve sequence of puzzles, and escape from the chamber of mummy.
+The current version of the game. We removed the minimap and room-switching mechanism because it limited our ability to incorporate tangible physical objects into the play space. The weight scale and flame hand puzzles were carried over into this version and redesigned to be more tangible. For example, the scale weights became physical props that players can interact with directly.
+
+The experience now resembles a mixed reality escape room, where players must carefully observe their surroundings, solve a sequence of interconnected puzzles, and ultimately escape from the mummy's chamber.
 
 ## Features
 
 1. Overlay
 
-    Occlusion and Passthrough are used in project to blend the virtual and physical space. Player can see virtual object and real physical object at same time in correct geometry relationship.
+    Occlusion and passthrough are used in the project to blend the virtual and physical environments. Players can see both virtual and real-world objects simultaneously while maintaining the correct spatial and geometric relationships between them. This allows virtual content to appear naturally integrated into the physical play space.
    
     <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/6575dfb8-e754-42d3-b640-c366a9d70797" />
 
 3. MQTT Communication
 
-    MQTT to facilitate communication between the sensors, actuators and the game session (hanlded by esp32). Specifically, this includes the values of hall effect sensors, signals to leds, language options and console monitoring.
+    MQTT is used to facilitate communication between the game session and the physical hardware components managed by ESP32 microcontrollers. Specifically, it is used to transmit hall-effect sensor readings, LED control signals, language selection options, and console monitoring information between the physical props and the Unity application.
 
     <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/ecf599da-f959-4277-b972-ef046854905f" />
 
 4. Hall-Effect Sensor Based Props
 
-    We designed a prop structure based on a hall effect sensor. Specifically, by controlling the distance between the magnet inside the prop and its bottom, the difference between reading value and baseline value can be used to define different prop types.
+    We designed a prop identification system based on hall-effect sensors. By controlling the distance between a magnet inside each prop and the sensor located beneath it, different magnetic field readings can be generated. The difference between the measured value and a calibrated baseline value is then used to identify different prop types.
 
    <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/12e001b8-eedc-4b63-9a88-361ca6e595ea" />
 
 6. Sensor Calibration
 
-    Because the magnetic field can vary depending on the environment and time, the baseline value of the hall effect sensor may differ. Therefore, the type of prop cannot be determined solely by a fixed interval; instead, the difference from the baseline should be used (as mentioned earlier). Furthermore, the baseline value needs to be recalibrated each time the game starts.
+    Because magnetic field readings can vary depending on environmental conditions and sensor drift over time, the baseline value of a hall-effect sensor may change. Therefore, prop identification cannot rely on fixed threshold values alone. Instead, the system uses the difference between the current reading and a calibrated baseline value, as described previously. To ensure reliable detection, the baseline is recalibrated automatically each time the game starts.
 
     ```csharp
     private IEnumerator Routine_Calibration()
@@ -74,14 +76,14 @@ The current version of the game. We removed the minimap and room switch mechanis
 
 7. QR Code Redirect
 
-    We use the [trackable QR code](https://developers.meta.com/horizon/documentation/unity/unity-mr-utility-kit-qrcode-detection) feature of the Meta SDK to redirect the entire scene. When any player scans the corresponding QR code, the scene for all players will be redirected to correct position and direction, to make sure all players stay in same virtual space.
+   We use the [trackable QR code](https://developers.meta.com/horizon/documentation/unity/unity-mr-utility-kit-qrcode-detection) feature provided by the Meta SDK to align the virtual environment with the physical play space. When any player scans the designated QR code, the scene is repositioned and reoriented for all connected players, ensuring that everyone shares the same virtual coordinate system and experiences the content in a consistent location.
 
     [Source Code](Assets\Workspace\Scripts\QRRelocation.cs).
 
-8. Multilingual
+9. Multilingual
 
-    We support both english and swedish version of text and voices. It controls by the MQTT signal: `MQTTProcessor.Instance.Language`
-
+    We support both English and Swedish versions of all text and voice content. The selected language is controlled through an MQTT signal and can be accessed within the game through `MQTTProcessor.Instance.Language`, allowing the experience to dynamically switch between supported languages.
+   
     <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/dba3b952-971b-4efb-9988-519b2877242f" />
 
     <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/c6476837-569b-4278-a165-83d2255b46eb" />
@@ -102,7 +104,7 @@ Unity Version: **6000.3.10.f1**
 
 **Additioanl Steps:**
 
-1. 3D print all props using models in design folder.
+1. 3D Print all props using models in design folder.
 2. Upload arduino codes to your esp32, source code files are in /Assets/Workplace/Arduino.
 3. Connect hall effect sensors to A0-A4. Leds are optional.
 
