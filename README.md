@@ -38,7 +38,7 @@ While after supervision, we decided to redesign this version, because for a mixe
 
 The current version of the game. We removed the minimap and room switch mechanism because it actually limit us to have tangible, physicial object in the game space. The weight scale and flame hand puzzles are inherited into this version, and be modified to be more tangible, for example, the weight of scale become physical props. The whole experience right now is more like an escape room experience, which players need to observe the whole room carefully, solve sequence of puzzles, and escape from the chamber of mummy.
 
-## Features (TODO fill images)
+## Features
 
 1. Overlay
 
@@ -51,9 +51,6 @@ The current version of the game. We removed the minimap and room switch mechanis
     MQTT to facilitate communication between the sensors, actuators and the game session (hanlded by esp32). Specifically, this includes the values of hall effect sensors, signals to leds, language options and console monitoring.
 
     <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/ecf599da-f959-4277-b972-ef046854905f" />
-
-    <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/51889c13-ed49-4319-8d16-11e0933cd6ea" />
-
 
 4. Hall-Effect Sensor Based Props
 
