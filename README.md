@@ -6,6 +6,8 @@
 
 The game uses passthrough and occlusion to blend the virtual and real worlds, and utilizes a variety of physical props and sensors to enhance immersion.
 
+<img width="1370" height="1943" alt="image" src="https://github.com/user-attachments/assets/ef4dfa7e-d328-4b71-9668-dd27558c30a6" />
+
 ![poster](https://drive.google.com/drive/folders/19A3F6wCXQ9Vh_v1lKL9-732FYGK7e6Bt)
 
 ## Design process
